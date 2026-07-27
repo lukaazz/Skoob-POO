@@ -1,0 +1,1 @@
+// GerenciadorSkoob.java

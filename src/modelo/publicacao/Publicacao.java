@@ -1,1 +1,1 @@
-// arquivo classe Publicacao
+// Publicacao.java
