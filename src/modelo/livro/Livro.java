@@ -1,12 +1,11 @@
-// Livro.java
 
+// Livro.java
 abstract class Livro {
 
     protected String titulo;
-    protected String autor; 
+    protected String autor;
     protected String sinopse;
     protected int id;
-
 
     public Livro(String titulo, String autor, String sinopse, int id) {
         this.titulo = titulo;
@@ -45,7 +44,8 @@ abstract class Livro {
 
     public void setId(int id) {
         this.id = id;
-    } 
+    }
 
+    
 
 }
