@@ -1,6 +1,6 @@
+package livro;
 
-// Livro.java
-abstract class Livro {
+public abstract class Livro {
 
     protected String titulo;
     protected String autor;

@@ -1,12 +1,12 @@
+package livro;
 
 import java.util.Scanner;
-
 
 public class Biblioteca {
 
 
 
-    Livro cadastrarLivro() {
+    public Livro cadastrarLivro() {
 
         Livro livro;
         Scanner sc = new Scanner(System.in);
@@ -44,9 +44,12 @@ public class Biblioteca {
             }
 
             default -> {
+                sc.close();
                 throw new AssertionError();
             }
         }
+
+        sc.close();
 
         return livro;
     }
