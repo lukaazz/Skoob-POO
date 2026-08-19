@@ -1,3 +1,6 @@
+// PARA COMPILAR: javac -d bin -sourcepath src src/App.java
+// PARA EXECUTAR: java -cp bin App
+
 import modelo.livro.*;
 
 public class App {
@@ -8,7 +11,7 @@ public class App {
         Biblioteca biblioteca = new Biblioteca();
 
         Livro novoCadastro = biblioteca.cadastrarLivro();
-
-        System.out.println(novoCadastro.getAutor());
+        biblioteca.exibirLivro(novoCadastro);
+        
     }
 }
