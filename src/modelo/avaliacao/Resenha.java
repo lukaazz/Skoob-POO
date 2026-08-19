@@ -1,9 +1,10 @@
-package avaliacao;
+package modelo.avaliacao;
 
-import java.time.LocalDate;
-import usuario.Usuario;
-import livro.Livro;
 import excecoes.*;
+import java.time.LocalDate;
+import modelo.livro.*;
+import modelo.usuario.*;
+
 
 public class Resenha{
     private final Usuario usuario;
