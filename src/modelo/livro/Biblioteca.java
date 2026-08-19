@@ -1,8 +1,14 @@
-package livro;
+package modelo.livro;
 
 import java.util.Scanner;
 
 public class Biblioteca {
+
+    
+
+    public void exibirLivro() {
+        // printar as informações de um livro
+    }
 
 
 

@@ -1,6 +1,4 @@
-import livro.*;
-
-//luisa sampaio
+import modelo.livro.*;
 
 public class App {
 

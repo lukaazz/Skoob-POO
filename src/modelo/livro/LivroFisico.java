@@ -1,4 +1,4 @@
-package livro;
+package modelo.livro;
 
 public class LivroFisico extends Livro {
 

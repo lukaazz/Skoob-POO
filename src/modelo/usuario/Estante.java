@@ -1,3 +1,8 @@
+package modelo.usuario;
+
+import java.util.ArrayList;
+import modelo.livro.*;
+
 public class Estante {
     private ArrayList<Livro> livros;
 

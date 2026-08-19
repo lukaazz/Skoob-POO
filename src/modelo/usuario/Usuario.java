@@ -1,3 +1,8 @@
+package modelo.usuario;
+
+import java.util.ArrayList;
+import modelo.livro.*;
+
 public abstract class Usuario {
     private String nome;
     private String email;
