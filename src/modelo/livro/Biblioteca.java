@@ -25,6 +25,18 @@ public class Biblioteca {
     }
 
 
+    public void exibirTodosLivros() {
+
+        for (Livro livro : catalogo.values()) {
+            exibirLivro(livro);
+        }
+    }
+
+    public void removerLivro(String titulo) {
+        catalogo.remove(titulo);
+    }
+
+
     public void exibirLivro(Livro livro) {
 
         FuncoesFormatacao.inserirDivisor();
