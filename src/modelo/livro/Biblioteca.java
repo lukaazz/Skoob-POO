@@ -19,6 +19,15 @@ public class Biblioteca {
         catalogo.put(livro.getTitulo(), livro);
     }
 
+    public Livro buscarLivro(String titulo) {
+        for (Livro livro : catalogo.values()) {
+            if (livro.getTitulo().equalsIgnoreCase(titulo)) {
+                return livro;
+            }
+        }
+        return null; // colocar livro não encontrado exception?
+    }
+
 
     public void removerLivro(Livro livro) {
         catalogo.remove(livro.getTitulo());
