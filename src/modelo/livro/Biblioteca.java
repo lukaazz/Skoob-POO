@@ -19,9 +19,10 @@ public class Biblioteca {
         catalogo.put(livro.getTitulo(), livro);
     }
 
+    
     public Livro buscarLivro(String titulo) {
         for (Livro livro : catalogo.values()) {
-            if (livro.getTitulo().equalsIgnoreCase(titulo)) {
+            if (livro.getTitulo().equalsIgnoreCase(titulo)) { 
                 return livro;
             }
         }
@@ -31,18 +32,6 @@ public class Biblioteca {
 
     public void removerLivro(Livro livro) {
         catalogo.remove(livro.getTitulo());
-    }
-
-
-    public void exibirTodosLivros() {
-
-        for (Livro livro : catalogo.values()) {
-            exibirLivro(livro);
-        }
-    }
-
-    public void removerLivro(String titulo) {
-        catalogo.remove(titulo);
     }
 
 
@@ -58,6 +47,14 @@ public class Biblioteca {
         System.out.printf(" SINOPSE : %s%n", livro.getSinopse());
 
         FuncoesFormatacao.inserirDivisor();
+    }
+
+
+    public void exibirTodosLivros() {
+
+        for (Livro livro : catalogo.values()) {
+            exibirLivro(livro);
+        }
     }
 
 }
