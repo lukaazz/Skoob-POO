@@ -1,5 +1,6 @@
 package modelo.usuario;
 
+import controle.GerenciadorArquivos;
 import java.util.Map;
 import modelo.livro.Livro;
 
@@ -17,11 +18,13 @@ public class Leitor extends Usuario {
         return estante.getLivros();
     }
 
-    public void adicionarLivroEstante(Livro livro, StatusLeitura status) {
+    public void adicionarLivroEstante(Livro livro, StatusLeitura status, GerenciadorArquivos gerenciadorArquivos) {
         estante.adicionarLivro(livro, status);
+        gerenciadorArquivos.salvarLeitores();
     }
 
-    public void removerLivroEstante(Livro livro) {
+    public void removerLivroEstante(Livro livro, GerenciadorArquivos gerenciadorArquivos) {
         estante.removerLivro(livro);
+        gerenciadorArquivos.salvarLeitores();
     }
 }

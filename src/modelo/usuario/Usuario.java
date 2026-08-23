@@ -23,7 +23,11 @@ public abstract class Usuario implements Serializable {
         return email;
     }
 
-    public String getSenha() {
-        return senha;
+    public Boolean senhaCerta(String senhaEntrada) {
+        if (senha.equals(senhaEntrada)) {
+            return true;
+        } else {
+            return null;
+        }
     }
 }

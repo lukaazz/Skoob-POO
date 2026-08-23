@@ -1,6 +1,6 @@
 // add outros arquivos
 
-package persistencia;
+package controle;
 
 import excecoes.AdministradorJaExisteException;
 import excecoes.LeitorJaExisteException;
@@ -103,7 +103,14 @@ public class GerenciadorArquivos {
         } catch (AdministradorJaExisteException e) {
             System.out.println(e.getMessage());
         }
+    }
 
+    public void salvarLeitores() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(caminhoLeitores.toFile()))) {
+            oos.writeObject(leitores);
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar os leitores");
+        }
     }
 
 }
