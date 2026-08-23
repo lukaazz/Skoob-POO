@@ -1,6 +1,8 @@
 package modelo.livro;
 
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 import modelo.FuncoesFormatacao;
 
 
@@ -9,6 +11,10 @@ public class Cadastro {
     public Livro cadastrarLivro(Scanner sc) {
 
         Livro livro;
+
+        Genero[] todosGeneros = Genero.values();
+        Set<Genero> generosEscolhidos = new HashSet<>();
+        boolean continuar = true;
 
         FuncoesFormatacao.exibirCabecalho("CADASTRO DE NOVO LIVRO");
 
@@ -20,6 +26,41 @@ public class Cadastro {
 
         FuncoesFormatacao.solicitarCampo("Sinopse");
         String sinopse = sc.nextLine();
+
+        System.err.println("\nQuais são os gêneros do livro?");
+
+        
+
+        while(continuar) {
+
+            System.out.println("\n");
+
+            for(int i = 0; i < todosGeneros.length; i++) {
+                System.out.println((i + 1) + ". " + todosGeneros[i]);
+            }
+
+            System.out.printf(">:");
+
+            int opcao_genero = sc.nextInt();
+            sc.nextLine();
+
+            Genero escolhido = todosGeneros[opcao_genero - 1];
+            generosEscolhidos.add(escolhido);
+
+
+            System.out.println("\n");
+            FuncoesFormatacao.solicitarCampo("Deseja adicionar outro gênero? (s/n)");
+            
+            String opcao_continuar = sc.nextLine();
+
+            if(opcao_continuar.equals("s")) {
+                continuar = true;
+            } else if (opcao_continuar.equals("n")) {
+                continuar = false;
+            }
+            // tratamento de exceção
+        }
+
 
         FuncoesFormatacao.exibirSubtitulo("TIPO DE LIVRO");
         System.out.println(" 1. Livro Físico");
@@ -37,19 +78,19 @@ public class Cadastro {
             case 1 -> {
                 FuncoesFormatacao.solicitarCampo("Quantidade de páginas");
                 String quantidadePaginas = sc.nextLine();
-                livro = new LivroFisico(titulo, autor, sinopse, quantidadePaginas);
+                livro = new LivroFisico(titulo, autor, sinopse, generosEscolhidos, quantidadePaginas);
             }
 
             case 2 -> {
                 FuncoesFormatacao.solicitarCampo("Quantidade de palavras");
                 String quantidadePalavras = sc.nextLine();
-                livro = new Ebook(titulo, autor, sinopse, quantidadePalavras);
+                livro = new Ebook(titulo, autor, sinopse, generosEscolhidos, quantidadePalavras);
             }
 
             case 3 -> {
                 FuncoesFormatacao.solicitarCampo("Duração em minutos");
                 String duracaoMinutos = sc.nextLine();
-                livro = new AudioBook(titulo, autor, sinopse, duracaoMinutos);
+                livro = new AudioBook(titulo, autor, sinopse, generosEscolhidos, duracaoMinutos);
             }
 
             default -> {

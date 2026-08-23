@@ -1,11 +1,13 @@
 package modelo.livro;
 
+import java.util.Set;
+
 public class LivroFisico extends Livro {
 
     private String quantidadePaginas;
 
-    public LivroFisico(String titulo, String autor, String sinopse, String quantidadePaginas) {
-        super(titulo, autor, sinopse);
+    public LivroFisico(String titulo, String autor, String sinopse, Set<Genero> generos, String quantidadePaginas) {
+        super(titulo, autor, sinopse, generos);
         this.quantidadePaginas = quantidadePaginas;
     }
 

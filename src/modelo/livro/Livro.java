@@ -1,21 +1,28 @@
 package modelo.livro;
 
+import java.util.Set;
+
 public abstract class Livro {
 
     protected String titulo;
     protected String autor;
     protected String sinopse;
     protected int id;   
+    protected Set<Genero> generos;
 
-    public Livro(String titulo, String autor, String sinopse) {
+    public Livro(String titulo, String autor, String sinopse, Set<Genero> generos) {
         this.titulo = titulo;
         this.autor = autor;
         this.sinopse = sinopse;
+        this.generos = generos;
+
     }
 
 
     // toString -> sobrescrever nas filhas (polimorfismo)
 
+
+    
 
     public String getTitulo() {
         return titulo;

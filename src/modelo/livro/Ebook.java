@@ -1,11 +1,13 @@
 package modelo.livro;
 
+import java.util.Set;
+
 public class Ebook extends Livro {
 
     private String quantidadePalavras;
 
-    public Ebook(String titulo, String autor, String sinopse, String quantidadePalavras) {
-        super(titulo, autor, sinopse);
+    public Ebook(String titulo, String autor, String sinopse, Set<Genero> generos, String quantidadePalavras) {
+        super(titulo, autor, sinopse, generos);
         this.quantidadePalavras = quantidadePalavras;
     }
 
