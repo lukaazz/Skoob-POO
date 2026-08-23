@@ -7,31 +7,29 @@ import modelo.FuncoesFormatacao;
 
 public class Biblioteca {
 
-    private Map<String, Livro> catalogo;
-
-
+    private final Map<Integer, Livro> catalogo; // final impede que catalogo seja reinstanciado em um metod que não seja o contrutor
+    private int proximoId = 1;
+ 
+    
     public Biblioteca() {
         this.catalogo = new HashMap<>();
     }
 
-    
+
     public void adicionarLivro(Livro livro) {
-        catalogo.put(livro.getTitulo(), livro);
+        livro.setId(proximoId);
+        catalogo.put(livro.getId(), livro);
+        this.proximoId++;
     }
 
-    
-    public Livro buscarLivro(String titulo) {
-        for (Livro livro : catalogo.values()) {
-            if (livro.getTitulo().equalsIgnoreCase(titulo)) { 
-                return livro;
-            }
-        }
-        return null; // colocar livro não encontrado exception?
+
+    public Livro buscarLivro(int id) {
+        return catalogo.get(id);
     }
 
 
     public void removerLivro(Livro livro) {
-        catalogo.remove(livro.getTitulo());
+        catalogo.remove(livro.getId());
     }
 
 

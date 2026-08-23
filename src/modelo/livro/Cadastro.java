@@ -1,7 +1,7 @@
 package modelo.livro;
 
-import modelo.FuncoesFormatacao;
 import java.util.Scanner;
+import modelo.FuncoesFormatacao;
 
 
 public class Cadastro {
@@ -53,12 +53,10 @@ public class Cadastro {
             }
 
             default -> {
-                sc.close();
                 FuncoesFormatacao.inserirDivisor();
                 throw new IllegalArgumentException("Opção inválida: " + op);
             }
         }
-        sc.close();
 
         FuncoesFormatacao.inserirDivisor();
         System.out.println(" Livro cadastrado com sucesso!");
