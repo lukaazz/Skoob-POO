@@ -22,6 +22,24 @@ public abstract class Livro {
     // toString -> sobrescrever nas filhas (polimorfismo)
 
 
+    public String getGeneros() {
+
+        Genero[] todosGeneros = Genero.values();
+        StringBuilder listaGeneros = new StringBuilder();
+        
+        for(int i = 0; i < todosGeneros.length; i++) {
+            
+                if(i == todosGeneros.length - 1) {
+                    listaGeneros.append(todosGeneros[i] + ".");
+                } else {
+                    listaGeneros.append(todosGeneros[i] + ", ");
+                }
+            }
+
+        return listaGeneros.toString();
+
+    }
+
     
 
     public String getTitulo() {
