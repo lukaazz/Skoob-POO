@@ -4,8 +4,8 @@ public class Ebook extends Livro {
 
     private String quantidadePalavras;
 
-    public Ebook(String titulo, String autor, String sinopse, int id, String quantidadePalavras) {
-        super(titulo, autor, sinopse, id);
+    public Ebook(String titulo, String autor, String sinopse, String quantidadePalavras) {
+        super(titulo, autor, sinopse);
         this.quantidadePalavras = quantidadePalavras;
     }
 

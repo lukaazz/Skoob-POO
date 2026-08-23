@@ -5,14 +5,17 @@ public abstract class Livro {
     protected String titulo;
     protected String autor;
     protected String sinopse;
-    protected int id;
+    protected int id;   
 
-    public Livro(String titulo, String autor, String sinopse, int id) {
+    public Livro(String titulo, String autor, String sinopse) {
         this.titulo = titulo;
         this.autor = autor;
         this.sinopse = sinopse;
-        this.id = id;
     }
+
+
+    // toString -> sobrescrever nas filhas (polimorfismo)
+
 
     public String getTitulo() {
         return titulo;

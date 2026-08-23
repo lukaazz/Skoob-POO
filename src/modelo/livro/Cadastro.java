@@ -37,19 +37,19 @@ public class Cadastro {
             case 1 -> {
                 FuncoesFormatacao.solicitarCampo("Quantidade de páginas");
                 String quantidadePaginas = sc.nextLine();
-                livro = new LivroFisico(titulo, autor, sinopse, 1, quantidadePaginas);
+                livro = new LivroFisico(titulo, autor, sinopse, quantidadePaginas);
             }
 
             case 2 -> {
                 FuncoesFormatacao.solicitarCampo("Quantidade de palavras");
                 String quantidadePalavras = sc.nextLine();
-                livro = new Ebook(titulo, autor, sinopse, 1, quantidadePalavras);
+                livro = new Ebook(titulo, autor, sinopse, quantidadePalavras);
             }
 
             case 3 -> {
                 FuncoesFormatacao.solicitarCampo("Duração em minutos");
                 String duracaoMinutos = sc.nextLine();
-                livro = new AudioBook(titulo, autor, sinopse, 1, duracaoMinutos);
+                livro = new AudioBook(titulo, autor, sinopse, duracaoMinutos);
             }
 
             default -> {

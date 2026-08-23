@@ -10,7 +10,7 @@ public class Biblioteca {
     private final Map<Integer, Livro> catalogo; // final impede que catalogo seja reinstanciado em um metod que não seja o contrutor
     private int proximoId = 1;
  
-    
+
     public Biblioteca() {
         this.catalogo = new HashMap<>();
     }
@@ -28,10 +28,12 @@ public class Biblioteca {
     }
 
 
-    public void removerLivro(Livro livro) {
-        catalogo.remove(livro.getId());
+    public void removerLivro(int id) {
+        catalogo.remove(id);
     }
 
+
+    // exibirResumoLivro() e exibirFichaLivro 
 
     public void exibirLivro(Livro livro) {
 
