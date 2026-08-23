@@ -1,19 +1,18 @@
 package modelo.usuario;
 
-import java.util.ArrayList;
-import modelo.livro.*;
+import java.io.Serializable;
 
-public abstract class Usuario {
+public abstract class Usuario implements Serializable {
     private String nome;
     private String email;
-    private String senha;
-    private Estante estante;
+    private transient String senha;
+
+    private static final long serialVersionUID = 1L;
 
     public Usuario(String nome, String email, String senha) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
-        this.estante = new Estante();
     }
 
     public String getNome() {
@@ -26,17 +25,5 @@ public abstract class Usuario {
 
     public String getSenha() {
         return senha;
-    }
-
-    public ArrayList<Livro> getEstante() {
-        return estante.getLivros();
-    }
-
-    public void adicionarLivroEstante(Livro livro) {
-        getEstante().add(livro);
-    }
-
-    public void removerLivroEstante(Livro livro) {
-        getEstante().remove(livro);
     }
 }
