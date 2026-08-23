@@ -24,10 +24,6 @@ public abstract class Usuario implements Serializable {
     }
 
     public Boolean senhaCerta(String senhaEntrada) {
-        if (senha.equals(senhaEntrada)) {
-            return true;
-        } else {
-            return null;
-        }
+        return senha.equals(senhaEntrada);
     }
 }

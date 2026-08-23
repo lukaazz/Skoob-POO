@@ -1,6 +1,6 @@
-package modelo.usuario;
+package excecoes;
 
-import modelo.livro.*;
+import modelo.livro.Livro;
 
 public class LivroJaGuargado extends RuntimeException {
     public LivroJaGuargado(Livro livro) {
