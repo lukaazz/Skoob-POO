@@ -66,4 +66,8 @@ public class GerenciadorSkoob {
     public void cadastrarAdministrador(Administrador admin) throws AdministradorJaExisteException {
         // (mesma lógica, só que pro mapa "admins")
     }
+
+    public Livro buscarLivro(String isbn) {
+        return catalogo.get(isbn);
+    }
 }
