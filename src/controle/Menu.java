@@ -2,10 +2,12 @@ package controle;
 
 import java.util.Scanner;
 
+import persistencia.GerenciadorSkoob;
+
 public class Menu {
 
     private final Scanner sc;
-    private final GerenciadorArquivos gerenciador;
+    GerenciadorSkoob gerenciador = GerenciadorSkoob.getInstancia();
 
     public Menu(Scanner sc) {
         this.sc = sc;
