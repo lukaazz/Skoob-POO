@@ -33,8 +33,6 @@ public class Biblioteca {
     }
 
 
-    // exibirResumoLivro() e exibirFichaLivro 
-
     public void exibirFichaLivro(Livro livro) {
 
         FuncoesFormatacao.inserirDivisor();

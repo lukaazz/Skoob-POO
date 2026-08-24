@@ -24,7 +24,10 @@ public abstract class Livro {
 
     public String getGeneros() {
 
-        Genero[] todosGeneros = Genero.values();
+        Genero[] todosGeneros = new Genero[this.generos.size()];
+
+        this.generos.toArray(todosGeneros);
+
         StringBuilder listaGeneros = new StringBuilder();
         
         for(int i = 0; i < todosGeneros.length; i++) {
@@ -35,9 +38,7 @@ public abstract class Livro {
                     listaGeneros.append(todosGeneros[i] + ", ");
                 }
             }
-
         return listaGeneros.toString();
-
     }
 
     
