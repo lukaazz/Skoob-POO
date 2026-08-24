@@ -3,6 +3,8 @@ package modelo.livro;
 import java.util.HashMap;
 import java.util.Map;
 
+// a
+
 
 public class Biblioteca {
 
@@ -43,7 +45,6 @@ public class Biblioteca {
         } else if (livro instanceof Ebook ebook) {
             System.out.print(ebook.toString());
         }
-
     }
 
 
