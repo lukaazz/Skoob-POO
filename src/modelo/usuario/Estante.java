@@ -48,4 +48,8 @@ public class Estante implements Serializable {
                 throw new LivroNaoAdicionadoException(livro.getTitulo());
             }
     }
+
+    public boolean contemLivro(Livro livro) {
+        return livros.containsKey(livro);
+    }
 }

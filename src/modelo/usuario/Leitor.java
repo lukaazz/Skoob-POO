@@ -1,8 +1,10 @@
 package modelo.usuario;
 
+import excecoes.AvaliacaoInvalidaException;
 import excecoes.LivroJaAdicionadoException;
 import excecoes.LivroNaoAdicionadoException;
 import java.util.Map;
+import modelo.avaliacao.Resenha;
 import modelo.livro.Livro;
 
 public class Leitor extends Usuario {
@@ -25,5 +27,14 @@ public class Leitor extends Usuario {
 
     public void removerLivroEstante(Livro livro) throws LivroNaoAdicionadoException {
         estante.removerLivro(livro);
+    }
+
+    public Resenha resenharLivro(Livro livro, String texto, int nota) throws LivroNaoAdicionadoException, AvaliacaoInvalidaException {
+        if (estante.contemLivro(livro)) {
+            Resenha resenha = new Resenha(this, texto, nota, java.time.LocalDate.now(), livro);
+            return resenha;
+        } else {
+            throw new LivroNaoAdicionadoException(livro.getTitulo());
+        }
     }
 }
