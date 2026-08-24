@@ -17,31 +17,21 @@ public class Estante implements Serializable {
         this.livros = new HashMap<>();
     }
 
-    public void adicionarLivro(Livro livro, StatusLeitura status) {
-        try {
+    public void adicionarLivro(Livro livro, StatusLeitura status) throws LivroJaAdicionadoException {
 
-            if(livros.containsKey(livro)) {
-                throw new LivroJaAdicionadoException(livro.getTitulo());
-            } else {
-                livros.put(livro, status);
-            }
-
-        } catch (LivroJaAdicionadoException e) {
-            System.out.println(e.getMessage());
+        if(livros.containsKey(livro)) {
+            throw new LivroJaAdicionadoException(livro.getTitulo());
+        } else {
+            livros.put(livro, status);
         }
     }
 
-    public void removerLivro(Livro livro) {
-        try {
+    public void removerLivro(Livro livro) throws LivroNaoAdicionadoException {
 
-            if(!livros.containsKey(livro)) {
-                throw new LivroNaoAdicionadoException(livro.getTitulo());
-            } else {
-                livros.remove(livro);
-            }
-
-        } catch (LivroNaoAdicionadoException e) {
-            System.out.println(e.getMessage());
+        if(!livros.containsKey(livro)) {
+            throw new LivroNaoAdicionadoException(livro.getTitulo());
+        } else {
+            livros.remove(livro);
         }
     }
 
@@ -49,8 +39,7 @@ public class Estante implements Serializable {
         return livros;
     }
 
-    public void mudarStatusLeitura(Livro livro, StatusLeitura novoStatus) {
-        try {
+    public void mudarStatusLeitura(Livro livro, StatusLeitura novoStatus) throws LivroNaoAdicionadoException {
 
             if(livros.containsKey(livro)) {
                 //vai substituir o status antigo pelo novo (o objeto nao muda, apenas o valor associado a ele)
@@ -58,9 +47,5 @@ public class Estante implements Serializable {
             } else {
                 throw new LivroNaoAdicionadoException(livro.getTitulo());
             }
-
-        } catch (LivroNaoAdicionadoException e) {
-            System.out.println(e.getMessage());
-        }
     }
 }
