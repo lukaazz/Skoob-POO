@@ -1,5 +1,7 @@
 package modelo.usuario;
 
+import excecoes.LivroJaAdicionadoException;
+import excecoes.LivroNaoAdicionadoException;
 import java.util.Map;
 import modelo.livro.Livro;
 
@@ -17,11 +19,11 @@ public class Leitor extends Usuario {
         return estante.getLivros();
     }
 
-    public void adicionarLivroEstante(Livro livro, StatusLeitura status) {
+    public void adicionarLivroEstante(Livro livro, StatusLeitura status) throws LivroJaAdicionadoException {
         estante.adicionarLivro(livro, status);
     }
 
-    public void removerLivroEstante(Livro livro) {
+    public void removerLivroEstante(Livro livro) throws LivroNaoAdicionadoException {
         estante.removerLivro(livro);
     }
 }

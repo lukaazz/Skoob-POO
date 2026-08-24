@@ -1,16 +1,14 @@
 package persistencia;
 
-import modelo.livro.Livro;
-import modelo.usuario.Leitor;
-import modelo.usuario.Usuario;
-import modelo.usuario.Administrador;
-import modelo.avaliacao.Resenha;
-
-import java.util.*;
-
 import excecoes.AdministradorJaExisteException;
 import excecoes.AutenticacaoInvalidaException;
 import excecoes.LeitorJaExisteException;
+import java.util.*;
+import modelo.avaliacao.Resenha;
+import modelo.livro.Livro;
+import modelo.usuario.Administrador;
+import modelo.usuario.Leitor;
+import modelo.usuario.Usuario;
 
 public class GerenciadorSkoob {
     private static GerenciadorSkoob instancia;
@@ -58,13 +56,20 @@ public class GerenciadorSkoob {
     }
 
     public void cadastrarLeitor(Leitor leitor) throws LeitorJaExisteException {
-        // TODO: checa se já existe no mapa "leitores" pelo email do leitor
-        // TODO: se existir, throw
-        // TODO: se não existir, adiciona no mapa
+
+        if(leitores.containsKey(leitor.getEmail())) {
+            throw new LeitorJaExisteException();
+        } else {
+            leitores.put(leitor.getEmail(), leitor);
+        }
     }
 
     public void cadastrarAdministrador(Administrador admin) throws AdministradorJaExisteException {
-        // (mesma lógica, só que pro mapa "admins")
+        if(admins.containsKey(admin.getEmail())) {
+            throw new AdministradorJaExisteException();
+        } else {
+            admins.put(admin.getEmail(), admin);
+        }
     }
 
     public Livro buscarLivro(String isbn) {

@@ -68,40 +68,23 @@ public class GerenciadorArquivos {
         }
     }
 
-    public void adicionarLeitor(Leitor leitor) {
+    public void adicionarLeitor(Leitor leitor) throws LeitorJaExisteException {
 
-        try {
-            if(leitores.containsKey(leitor.getEmail())) {
-                throw new LeitorJaExisteException();
-            } else {
-                leitores.put(leitor.getEmail(), leitor);
-
-                try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(caminhoLeitores.toFile()))) {
-                    oos.writeObject(leitores);
-                } catch (IOException e) {
-                    System.out.println("Erro ao salvar os leitores");
-                }
-            }
-        } catch (LeitorJaExisteException e) {
-            System.out.println(e.getMessage());
+        if(leitores.containsKey(leitor.getEmail())) {
+            throw new LeitorJaExisteException();
+        } else {
+            leitores.put(leitor.getEmail(), leitor);
+            salvarLeitores();
         }
     }
 
-    public void adicionarAdministrador(Administrador administrador) {
-        try {
-            if(administradores.containsKey(administrador.getEmail())) {
-                throw new AdministradorJaExisteException();
-            } else {
-                administradores.put(administrador.getEmail(), administrador);
-
-                try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(caminhoAdministradores.toFile()))) {
-                    oos.writeObject(administradores);
-                } catch (IOException e) {
-                    System.out.println("Erro ao salvar os administradores");
-                }
-            }
-        } catch (AdministradorJaExisteException e) {
-            System.out.println(e.getMessage());
+    public void adicionarAdministrador(Administrador administrador) throws AdministradorJaExisteException {
+        
+        if(administradores.containsKey(administrador.getEmail())) {
+            throw new AdministradorJaExisteException();
+        } else {
+            administradores.put(administrador.getEmail(), administrador);
+            salvarAdministradores();
         }
     }
 
@@ -110,6 +93,14 @@ public class GerenciadorArquivos {
             oos.writeObject(leitores);
         } catch (IOException e) {
             System.out.println("Erro ao salvar os leitores");
+        }
+    }
+
+    public void salvarAdministradores() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(caminhoAdministradores.toFile()))) {
+            oos.writeObject(administradores);
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar os administradores");
         }
     }
 
