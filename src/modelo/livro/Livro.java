@@ -2,6 +2,7 @@ package modelo.livro;
 
 import excecoes.NotaInvalidaException;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Set;
 import modelo.FuncoesFormatacao;
 
@@ -66,11 +67,11 @@ public abstract class Livro implements Serializable {
         StringBuilder listaGeneros = new StringBuilder();
 
         for (int i = 0; i < todosGeneros.length; i++) {
-
+            listaGeneros.append(todosGeneros[i]);
             if (i == todosGeneros.length - 1) {
-                listaGeneros.append(todosGeneros[i] + ".");
+                listaGeneros.append(".");
             } else {
-                listaGeneros.append(todosGeneros[i] + ", ");
+                listaGeneros.append(", ");
             }
         }
         return listaGeneros.toString();
@@ -84,9 +85,8 @@ public abstract class Livro implements Serializable {
         return nota;
     }
 
-
     public void recalcularNota(double novaNota) throws NotaInvalidaException {
-        
+
         if (novaNota >= 0 && novaNota <= 5) {
             this.quantidadeAvaliacoes++;
             this.nota = (this.nota * (this.quantidadeAvaliacoes - 1) + novaNota) / this.quantidadeAvaliacoes;
@@ -117,6 +117,24 @@ public abstract class Livro implements Serializable {
         resultado += String.format(" NOTA      : %s%n", getNota());
 
         return resultado;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Livro outro = (Livro) obj;
+        return this.id == outro.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
 }
