@@ -1,6 +1,7 @@
 package modelo.livro;
 
 import java.util.Set;
+import modelo.FuncoesFormatacao;
 
 public class AudioBook extends Livro {
 
@@ -17,6 +18,16 @@ public class AudioBook extends Livro {
 
     public String getTempo() {
         return tempo;
+    }
+
+    @Override
+    public String toString() {
+        
+        String resultado = super.toString();
+        resultado += String.format(" PALAVRAS : %s%n", getTempo());
+        resultado += FuncoesFormatacao.inserirDivisor();
+
+        return resultado;
     }
 
 }

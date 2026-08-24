@@ -4,32 +4,27 @@ public class FuncoesFormatacao {
 
     private FuncoesFormatacao() {}
 
-    public static void inserirLinha() {
+    public static String inserirLinha() {
         String divisor = "-".repeat(60);
-        System.out.println("\n" + divisor);
+        return "\n" + divisor + "\n";
     }
 
-    public static void inserirDivisor() {
+    public static String inserirDivisor() {
         String divisor = "=".repeat(60);
-        System.out.println("\n" + divisor);
+        return "\n" + divisor + "\n";
     }
 
-    public static void exibirCabecalho(String titulo) {
-        inserirDivisor();
-        System.out.println(" " + titulo.toUpperCase());
+    public static String exibirCabecalho(String titulo) {
         String divisor = "=".repeat(60);
-        System.out.println(divisor);
+        return inserirDivisor() + titulo.toUpperCase() + "\n" + divisor;
     }
 
-    public static void exibirSubtitulo(String subtitulo) {
-        inserirLinha();
-        System.out.println(" " + subtitulo);
+    public static String exibirSubtitulo(String subtitulo) {
         String divisor = "-".repeat(60);
-        System.out.println(divisor);
+        return inserirLinha() + subtitulo + "\n" + divisor;
     }
 
-    public static void solicitarCampo(String rotulo) {
-        System.out.printf(" %-24s > ", rotulo);
+    public static String solicitarCampo(String rotulo) {
+        return String.format(" %-24s > ", rotulo);
     }
-    
 }
