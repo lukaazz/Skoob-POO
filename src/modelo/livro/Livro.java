@@ -18,6 +18,7 @@ public abstract class Livro implements Serializable {
     protected double nota;
     protected int quantidadeAvaliacoes;
 
+
     public Livro(String titulo, String autor, String sinopse, Set<Genero> generos) {
         this.titulo = titulo;
         this.autor = autor;
@@ -85,6 +86,7 @@ public abstract class Livro implements Serializable {
         return nota;
     }
 
+    // ver como nota tá funcionando com a luisa
     public void recalcularNota(double novaNota) throws NotaInvalidaException {
 
         if (novaNota >= 0 && novaNota <= 5) {

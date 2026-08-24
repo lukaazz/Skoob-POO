@@ -27,9 +27,8 @@ public class Cadastro {
         System.out.print(FuncoesFormatacao.solicitarCampo("Sinopse"));
         String sinopse = sc.nextLine();
 
-        System.out.println("\nQuais são os gêneros do livro?");
 
-        
+        System.out.println("\nQuais são os gêneros do livro?");
 
         while(continuar) {
 
@@ -43,6 +42,7 @@ public class Cadastro {
 
             int opcao_genero = sc.nextInt();
             sc.nextLine();
+            // lançar exceção para verificar se opção é valida
 
             Genero escolhido = todosGeneros[opcao_genero - 1];
             generosEscolhidos.add(escolhido);
