@@ -34,22 +34,13 @@ public class Biblioteca {
     }
 
 
-    public void exibirFichaLivro(Livro livro) {
-
-        if(livro instanceof LivroFisico livroFisico) {
-            System.out.print(livroFisico.toString());
-
-        } else if (livro instanceof AudioBook audioBook) {
-            System.out.print(audioBook.toString());
-
-        } else if (livro instanceof Ebook ebook) {
-            System.out.print(ebook.toString());
-        }
+    public void exibirFichaLivro(int id) {
+        Livro livro = catalogo.get(id);
+        System.out.print(livro.toString());
     }
 
 
     public void exibirResumoLivro(Livro livro) {
-
         System.out.print(livro.resumo());
     }
 
