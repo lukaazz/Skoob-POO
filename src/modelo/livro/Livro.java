@@ -1,15 +1,21 @@
 package modelo.livro;
 
+import excecoes.NotaInvalidaException;
+import java.io.Serializable;
 import java.util.Set;
 import modelo.FuncoesFormatacao;
 
-public abstract class Livro {
+public abstract class Livro implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     protected String titulo;
     protected String autor;
     protected String sinopse;
-    protected int id;   
+    protected int id;
     protected Set<Genero> generos;
+    protected double nota;
+    protected int quantidadeAvaliacoes;
 
     public Livro(String titulo, String autor, String sinopse, Set<Genero> generos) {
         this.titulo = titulo;
@@ -18,55 +24,6 @@ public abstract class Livro {
         this.generos = generos;
 
     }
-
-
-    // toString -> sobrescrever nas filhas (polimorfismo)
-
-    public String resumo() {
-
-        String resultado = "";
-        
-        resultado += FuncoesFormatacao.inserirDivisor();
-        resultado += String.format(" TÍTULO    : %s%n", getTitulo());
-        resultado += String.format(" AUTOR     : %s%n", getAutor()); 
-        resultado += FuncoesFormatacao.inserirLinha();
-        resultado += String.format(" SINOPSE   : %s%n", getSinopse());
-
-        return resultado;
-    }
-
-    
-    @Override
-    public String toString() {
-
-        String resultado = resumo();
-
-        resultado += resultado += String.format(" GÊNERO(S) : %s%n", getGeneros());
-
-        return resultado;
-        
-    }
-
-    public String getGeneros() {
-
-        Genero[] todosGeneros = new Genero[this.generos.size()];
-
-        this.generos.toArray(todosGeneros);
-
-        StringBuilder listaGeneros = new StringBuilder();
-        
-        for(int i = 0; i < todosGeneros.length; i++) {
-            
-                if(i == todosGeneros.length - 1) {
-                    listaGeneros.append(todosGeneros[i] + ".");
-                } else {
-                    listaGeneros.append(todosGeneros[i] + ", ");
-                }
-            }
-        return listaGeneros.toString();
-    }
-
-    
 
     public String getTitulo() {
         return titulo;
@@ -100,6 +57,66 @@ public abstract class Livro {
         this.id = id;
     }
 
-    
+    public String getGeneros() {
+
+        Genero[] todosGeneros = new Genero[this.generos.size()];
+
+        this.generos.toArray(todosGeneros);
+
+        StringBuilder listaGeneros = new StringBuilder();
+
+        for (int i = 0; i < todosGeneros.length; i++) {
+
+            if (i == todosGeneros.length - 1) {
+                listaGeneros.append(todosGeneros[i] + ".");
+            } else {
+                listaGeneros.append(todosGeneros[i] + ", ");
+            }
+        }
+        return listaGeneros.toString();
+    }
+
+    public int getQuantidadeAvaliacoes() {
+        return quantidadeAvaliacoes;
+    }
+
+    public double getNota() {
+        return nota;
+    }
+
+
+    public void recalcularNota(double novaNota) throws NotaInvalidaException {
+        
+        if (novaNota >= 0 && novaNota <= 5) {
+            this.quantidadeAvaliacoes++;
+            this.nota = (this.nota * (this.quantidadeAvaliacoes - 1) + novaNota) / this.quantidadeAvaliacoes;
+        } else {
+            throw new NotaInvalidaException();
+        }
+    }
+
+    public String resumo() {
+
+        String resultado = "";
+
+        resultado += FuncoesFormatacao.inserirDivisor();
+        resultado += String.format(" TÍTULO    : %s%n", getTitulo());
+        resultado += String.format(" AUTOR     : %s%n", getAutor());
+        resultado += FuncoesFormatacao.inserirLinha();
+        resultado += String.format(" SINOPSE   : %s%n", getSinopse());
+
+        return resultado;
+    }
+
+    @Override
+    public String toString() {
+
+        String resultado = resumo();
+
+        resultado += String.format(" GÊNERO(S) : %s%n", getGeneros());
+        resultado += String.format(" NOTA      : %s%n", getNota());
+
+        return resultado;
+    }
 
 }

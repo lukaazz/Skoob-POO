@@ -24,7 +24,7 @@ public class AudioBook extends Livro {
     public String toString() {
         
         String resultado = super.toString();
-        resultado += String.format(" PALAVRAS : %s%n", getTempo());
+        resultado += String.format(" TEMPO : %s%n", getTempo());
         resultado += FuncoesFormatacao.inserirDivisor();
 
         return resultado;

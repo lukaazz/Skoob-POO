@@ -15,7 +15,7 @@ public class App {
 
         Livro novoCadastro = cadastro.cadastrarLivro(sc);
         biblioteca.adicionarLivro(novoCadastro);
-        biblioteca.exibirFichaLivro(novoCadastro);
+        biblioteca.exibirFichaLivro(novoCadastro.getId());
 
         sc.close();
     }
