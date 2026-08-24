@@ -6,22 +6,22 @@ public class FuncoesFormatacao {
 
     public static String inserirLinha() {
         String divisor = "-".repeat(60);
-        return "\n" + divisor;
+        return "\n" + divisor + "\n";
     }
 
     public static String inserirDivisor() {
         String divisor = "=".repeat(60);
-        return "\n" + divisor;
+        return "\n" + divisor + "\n";
     }
 
     public static String exibirCabecalho(String titulo) {
         String divisor = "=".repeat(60);
-        return inserirDivisor() + "\n " + titulo.toUpperCase() + "\n" + divisor;
+        return inserirDivisor() + titulo.toUpperCase() + "\n" + divisor;
     }
 
     public static String exibirSubtitulo(String subtitulo) {
         String divisor = "-".repeat(60);
-        return inserirLinha() + "\n " + subtitulo + "\n" + divisor;
+        return inserirLinha() + subtitulo + "\n" + divisor;
     }
 
     public static String solicitarCampo(String rotulo) {

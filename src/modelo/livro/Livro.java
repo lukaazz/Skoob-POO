@@ -1,7 +1,6 @@
 package modelo.livro;
 
 import java.util.Set;
-
 import modelo.FuncoesFormatacao;
 
 public abstract class Livro {
@@ -23,20 +22,29 @@ public abstract class Livro {
 
     // toString -> sobrescrever nas filhas (polimorfismo)
 
+    public String resumo() {
+
+        String resultado = "";
+        
+        resultado += FuncoesFormatacao.inserirDivisor();
+        resultado += String.format(" TÍTULO    : %s%n", getTitulo());
+        resultado += String.format(" AUTOR     : %s%n", getAutor()); 
+        resultado += FuncoesFormatacao.inserirLinha();
+        resultado += String.format(" SINOPSE   : %s%n", getSinopse());
+
+        return resultado;
+    }
+
+    
     @Override
     public String toString() {
 
-        FuncoesFormatacao.inserirDivisor();
+        String resultado = resumo();
 
-        System.out.printf(" TÍTULO    : %s%n", getTitulo());
-        System.out.printf(" AUTOR     : %s%n", getAutor());
-        System.out.printf(" GÊNERO(S) : %s%n", getGeneros());
+        resultado += resultado += String.format(" GÊNERO(S) : %s%n", getGeneros());
 
-        FuncoesFormatacao.inserirLinha();
-
-        System.out.printf(" SINOPSE : %s%n", livro.getSinopse());
-
-        FuncoesFormatacao.inserirDivisor();
+        return resultado;
+        
     }
 
     public String getGeneros() {

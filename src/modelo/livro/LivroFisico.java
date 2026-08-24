@@ -1,6 +1,7 @@
 package modelo.livro;
 
 import java.util.Set;
+import modelo.FuncoesFormatacao;
 
 public class LivroFisico extends Livro {
 
@@ -17,6 +18,17 @@ public class LivroFisico extends Livro {
 
     public String getQuantidadePaginas() {
         return quantidadePaginas;
+    }
+
+
+    @Override
+    public String toString() {
+        
+        String resultado = super.toString();
+        resultado += String.format(" PÁGINAS : %s%n", getQuantidadePaginas());
+        resultado += FuncoesFormatacao.inserirDivisor();
+
+        return resultado;
     }
 
 }

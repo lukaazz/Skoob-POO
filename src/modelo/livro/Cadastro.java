@@ -16,18 +16,18 @@ public class Cadastro {
         Set<Genero> generosEscolhidos = new HashSet<>();
         boolean continuar = true;
 
-        FuncoesFormatacao.exibirCabecalho("CADASTRO DE NOVO LIVRO");
+        System.out.print(FuncoesFormatacao.exibirCabecalho("CADASTRO DE NOVO LIVRO"));
 
-        FuncoesFormatacao.solicitarCampo("Título");
+        System.out.print(FuncoesFormatacao.solicitarCampo("Título"));
         String titulo = sc.nextLine();
 
-        FuncoesFormatacao.solicitarCampo("Autor");
+        System.out.print(FuncoesFormatacao.solicitarCampo("Autor"));
         String autor = sc.nextLine();
 
-        FuncoesFormatacao.solicitarCampo("Sinopse");
+        System.out.print(FuncoesFormatacao.solicitarCampo("Sinopse"));
         String sinopse = sc.nextLine();
 
-        System.err.println("\nQuais são os gêneros do livro?");
+        System.out.println("\nQuais são os gêneros do livro?");
 
         
 
@@ -49,7 +49,7 @@ public class Cadastro {
 
 
             System.out.println("\n");
-            FuncoesFormatacao.solicitarCampo("Deseja adicionar outro gênero? (s/n)");
+            System.out.print(FuncoesFormatacao.solicitarCampo("Deseja adicionar outro gênero? (s/n)"));
             
             String opcao_continuar = sc.nextLine();
 
@@ -61,47 +61,46 @@ public class Cadastro {
             // tratamento de exceção
         }
 
-
-        FuncoesFormatacao.exibirSubtitulo("TIPO DE LIVRO");
+        System.out.print(FuncoesFormatacao.exibirSubtitulo("TIPO DE LIVRO"));
         System.out.println(" 1. Livro Físico");
         System.out.println(" 2. Ebook");
         System.out.println(" 3. AudioBook");
-        FuncoesFormatacao.inserirLinha();
+        System.out.print(FuncoesFormatacao.inserirLinha());
 
-        FuncoesFormatacao.solicitarCampo("Escolha uma opção");
+        System.out.print(FuncoesFormatacao.solicitarCampo("Escolha uma opção"));
         int op = sc.nextInt();
         sc.nextLine();
 
-        FuncoesFormatacao.inserirLinha();
+        System.out.print(FuncoesFormatacao.inserirLinha());
 
         switch (op) {
             case 1 -> {
-                FuncoesFormatacao.solicitarCampo("Quantidade de páginas");
+                System.out.print(FuncoesFormatacao.solicitarCampo("Quantidade de páginas"));
                 String quantidadePaginas = sc.nextLine();
                 livro = new LivroFisico(titulo, autor, sinopse, generosEscolhidos, quantidadePaginas);
             }
 
             case 2 -> {
-                FuncoesFormatacao.solicitarCampo("Quantidade de palavras");
+                System.out.print(FuncoesFormatacao.solicitarCampo("Quantidade de palavras"));
                 String quantidadePalavras = sc.nextLine();
                 livro = new Ebook(titulo, autor, sinopse, generosEscolhidos, quantidadePalavras);
             }
 
             case 3 -> {
-                FuncoesFormatacao.solicitarCampo("Duração em minutos");
+                System.out.print(FuncoesFormatacao.solicitarCampo("Duração em minutos"));
                 String duracaoMinutos = sc.nextLine();
                 livro = new AudioBook(titulo, autor, sinopse, generosEscolhidos, duracaoMinutos);
             }
 
             default -> {
-                FuncoesFormatacao.inserirDivisor();
+                System.out.print(FuncoesFormatacao.inserirDivisor());
                 throw new IllegalArgumentException("Opção inválida: " + op);
             }
         }
 
-        FuncoesFormatacao.inserirDivisor();
+        System.out.print(FuncoesFormatacao.inserirDivisor());
         System.out.println(" Livro cadastrado com sucesso!");
-        FuncoesFormatacao.inserirDivisor();
+        System.out.print(FuncoesFormatacao.inserirDivisor());
 
         return livro;
     }

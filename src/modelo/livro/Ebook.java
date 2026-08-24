@@ -1,6 +1,7 @@
 package modelo.livro;
 
 import java.util.Set;
+import modelo.FuncoesFormatacao;
 
 public class Ebook extends Livro {
 
@@ -17,6 +18,16 @@ public class Ebook extends Livro {
 
     public String getQuantidadePalavras() {
         return quantidadePalavras;
+    }
+
+    @Override
+    public String toString() {
+        
+        String resultado = super.toString();
+        resultado += String.format(" PALAVRAS : %s%n", getQuantidadePalavras());
+        resultado += FuncoesFormatacao.inserirDivisor();
+
+        return resultado;
     }
 
 }
