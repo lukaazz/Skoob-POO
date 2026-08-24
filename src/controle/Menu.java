@@ -2,6 +2,10 @@ package controle;
 
 import java.util.Scanner;
 
+import excecoes.AutenticacaoInvalidaException;
+import modelo.usuario.Administrador;
+import modelo.usuario.Leitor;
+import modelo.usuario.Usuario;
 import persistencia.GerenciadorSkoob;
 
 public class Menu {
@@ -13,12 +17,12 @@ public class Menu {
         this.sc = sc;
     }
 
-    // Loop principal: 1-Login, 2-Cadastrar, 3-Sair
     public void iniciar() {
-        int op;
-        while(op != 3){
+        int op = 0;
+        while (op != 3) {
             System.out.println("MENU\n1 - Login\n2 - Cadastrar\n3 - Sair\n");
             op = sc.nextInt();
+            sc.nextLine();
             switch (op) {
                 case 1:
                     fazerLogin();
@@ -32,34 +36,52 @@ public class Menu {
         }
     }
 
-    // Autentica e direciona pro menu certo (leitor ou admin)
     private void fazerLogin() {
-        // TODO: chamar o método de autenticação do GerenciadorSkoob
-        // TODO: se deu certo, usar instanceof pra decidir:
-        //         exibirMenuLeitor(...) ou exibirMenuAdmin(...)
-        // TODO: se falhou, avisar o usuário (pensa: exception ou mensagem simples?)
+        System.out.println("Inserir email: ");
+        String email = sc.nextLine();
         System.out.println("Inserir senha: ");
         String senha = sc.nextLine();
 
+        try {
+            Usuario usuarioLogado = gerenciador.autenticar(email, senha);
+            if (usuarioLogado instanceof Leitor) {
+                exibirMenuLeitor((Leitor) usuarioLogado);
+            }
+            if (usuarioLogado instanceof Administrador) {
+                exibirMenuAdmin((Administrador) usuarioLogado);
+            }
+
+        } catch (AutenticacaoInvalidaException e) {
+            System.out.println("Login ou senha inválidos.");
+        }
     }
 
-    // Cria um novo usuário (leitor ou admin?)
     private void cadastrarUsuario() {
-        // TODO: pedir os dados necessários pelo sc
-        // TODO: perguntar se o cadastro é de LeitorComum ou Administrador
-        //       (ou será que só existe cadastro de leitor, e admin é fixo?
-        //        pensa nisso — decisão de design sua)
-        // TODO: registrar no GerenciadorSkoob
+        System.out.println("1 - Leitor | 2 - Administrador\n");
+        int op = sc.nextInt();
+        sc.nextLine();
+        System.out.println("Insira nome: ");
+        String nome = sc.nextLine();
+        System.out.println("Insira email: ");
+        String email = sc.nextLine();
+        System.out.println("Insira senha: ");
+        String senha = sc.nextLine();
+        if(op == 1){
+            Leitor l = new Leitor(nome, email, senha);
+        }
+        else if(op == 2){
+            Administrador a = new Administrador(nome, email, senha);
+        }
     }
 
     // Opções exclusivas do leitor: resenha, adicionar na estante, mudar status
-    private void exibirMenuLeitor(/* tipo do parâmetro? */ leitor) {
+    private void exibirMenuLeitor(Leitor leitor) {
         // TODO: loop com as opções do leitor
         // TODO: cada opção chama um método específico (ex: fazerResenha(), etc.)
     }
 
     // Opções exclusivas do admin: adicionar/remover livro do catálogo
-    private void exibirMenuAdmin(/* tipo do parâmetro? */ admin) {
+    private void exibirMenuAdmin(Administrador admin) {
         // TODO: loop com as opções do admin
     }
 }

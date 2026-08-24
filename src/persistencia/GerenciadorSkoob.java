@@ -1,4 +1,5 @@
 package persistencia;
+
 import modelo.livro.Livro;
 import modelo.usuario.Leitor;
 import modelo.usuario.Usuario;
@@ -7,7 +8,9 @@ import modelo.avaliacao.Resenha;
 
 import java.util.*;
 
+import excecoes.AdministradorJaExisteException;
 import excecoes.AutenticacaoInvalidaException;
+import excecoes.LeitorJaExisteException;
 
 public class GerenciadorSkoob {
     private static GerenciadorSkoob instancia;
@@ -17,7 +20,7 @@ public class GerenciadorSkoob {
     private Map<String, Administrador> admins;
     private List<Resenha> resenhas;
 
-    private GerenciadorSkoob(){
+    private GerenciadorSkoob() {
         catalogo = new HashMap<>();
         leitores = new HashMap<>();
         admins = new HashMap<>();
@@ -31,30 +34,36 @@ public class GerenciadorSkoob {
         return instancia;
     }
 
-    public Usuario autenticar(String email, String senha) {
+    public Usuario autenticar(String email, String senha) throws AutenticacaoInvalidaException {
 
-        try {
-            if(leitores.containsKey(email) || admins.containsKey(email)) {
-
-                if((admins.get(email).senhaCerta(senha))) {
-                    System.out.println("Logando...");
-                    return admins.get(email);
-
-                } else if ((leitores.get(email).senhaCerta(email))) {
-                    System.out.println("Logando...");
-                    return leitores.get(email);
-
-                } else {
-                    throw new AutenticacaoInvalidaException();
-                }
+        if (leitores.containsKey(email)) {
+            if (leitores.get(email).senhaCerta(senha)) {
+                System.out.println("Logando...");
+                return leitores.get(email);
             } else {
                 throw new AutenticacaoInvalidaException();
             }
 
-        } catch (AutenticacaoInvalidaException e) {
-            e.getMessage();
-        }
+        } else if (admins.containsKey(email)) {
+            if (admins.get(email).senhaCerta(senha)) {
+                System.out.println("Logando...");
+                return admins.get(email);
+            } else {
+                throw new AutenticacaoInvalidaException();
+            }
 
-    
+        } else {
+            throw new AutenticacaoInvalidaException();
+        }
+    }
+
+    public void cadastrarLeitor(Leitor leitor) throws LeitorJaExisteException {
+        // TODO: checa se já existe no mapa "leitores" pelo email do leitor
+        // TODO: se existir, throw
+        // TODO: se não existir, adiciona no mapa
+    }
+
+    public void cadastrarAdministrador(Administrador admin) throws AdministradorJaExisteException {
+        // (mesma lógica, só que pro mapa "admins")
     }
 }
