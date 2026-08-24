@@ -119,6 +119,10 @@ public abstract class Livro implements Serializable {
         return resultado;
     }
 
+    public boolean comparaDadosIguais(Livro livro2) {
+        return (this.autor.equals(livro2.getAutor())  && this.titulo.equals(livro2.getTitulo()));    
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
