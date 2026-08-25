@@ -16,7 +16,6 @@ public class Biblioteca {
     }
 
     public void adicionarLivro(Livro livro) throws LivroJaCadastradoCatalogoException {
-        
         boolean jaTemNoCatalogo = false;
 
         for (Livro livroCadastrado : catalogo.values()) {
@@ -38,7 +37,6 @@ public class Biblioteca {
     
 
     public Livro buscarLivro(int id) throws IdNaoEncontradoException {
-
         if (!catalogo.containsKey(id)) {
             throw new IdNaoEncontradoException();
         }

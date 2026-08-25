@@ -11,6 +11,7 @@ import modelo.usuario.Leitor;
 import modelo.usuario.Usuario;
 
 public class GerenciadorSkoob {
+    
     private static GerenciadorSkoob instancia;
 
     private Map<String, Livro> catalogo;

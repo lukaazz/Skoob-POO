@@ -102,7 +102,7 @@ public class Menu {
                     if (livroR == null) {
                         System.out.println("Livro não encontrado no catálogo.");
                     } else {
-                        leitor.removerLivroEstante(livroR);
+                        leitor.removerLivroEstante(livro);
                         System.out.println("Livro removido da estante!");
                     }
                     break;
