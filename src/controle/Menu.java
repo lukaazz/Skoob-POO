@@ -60,6 +60,7 @@ public class Menu {
     }
 
     private void cadastrarUsuario() {
+        /*-------------------- ARRUMAR -------------------- */
         System.out.println("1 - Leitor | 2 - Administrador\n");
         int op = sc.nextInt();
         sc.nextLine();
@@ -78,27 +79,60 @@ public class Menu {
 
     private void exibirMenuLeitor(Leitor leitor) {
         int op = 0;
+        int op2 = 0;
+
         while (op != 5) {
             System.out.println(
                     "1 - Adicionar livro a estante\n2 - Remover livro da estante\n3 - Mudar status livro\n4 - Fazer resenha\n5 - Sair\n");
             op = sc.nextInt();
+
             switch (op) {
                 case 1:
-                    System.out.println("Inserir ISBN do livro: ");
-                    String isbn = sc.nextLine();
+                    System.out.println("Inserir ID do livro: ");
+                    int id = sc.nextInt();
+                    sc.nextLine(); // consumir quebra de linha
 
-                    Livro livro = gerenciador.buscarLivro(isbn);
+                    Livro livro = gerenciador.buscarLivro(id);
                     if (livro == null) {
                         System.out.println("Livro não encontrado no catálogo.");
                     } else {
-                        leitor.adicionarLivroEstante(livro, StatusLeitura.QUERO_LER);
-                        System.out.println("Livro adicionado à estante!");
+
+                        System.out.println("Escolha o status de leitura: 1-Quero ler | 2-Lendo | 3-Lido | 4-Abandonado");
+                        op2 = sc.nextInt();
+
+                        try {
+                            switch (op2) {
+                                case 1:
+                                    leitor.adicionarLivroEstante(livro, StatusLeitura.QUERO_LER);
+                                    System.out.println("Livro adicionado à estante!");
+                                    break;
+                                case 2:
+                                    leitor.adicionarLivroEstante(livro, StatusLeitura.LENDO);
+                                    System.out.println("Livro adicionado à estante!");
+                                    break;
+                                case 3:
+                                    leitor.adicionarLivroEstante(livro, StatusLeitura.LIDO);
+                                    System.out.println("Livro adicionado à estante!");
+                                    break;
+                                case 4:
+                                    leitor.adicionarLivroEstante(livro, StatusLeitura.ABANDONADO);
+                                    System.out.println("Livro adicionado à estante!");
+                                    break;
+                                default:
+                                    System.out.println("Opcao invalida. Livro nao adicionado.");
+                            }
+
+                        } catch (LivroJaAdicionadoException e) {
+                            System.out.println("Livro ja esta presente na estante.");
+                        }
                     }
                     break;
                 case 2:
-                    System.out.println("Inserir ISBN do livro: ");
-                    String isbnR = sc.nextLine();
-                    Livro livroR = gerenciador.buscarLivro(isbnR);
+                    System.out.println("Inserir ID do livro: ");
+                    int idR = sc.nextInt();
+                    sc.nextLine(); // consumir quebra de linha
+                    Livro livroR = gerenciador.buscarLivro(idR);
+
                     if (livroR == null) {
                         System.out.println("Livro não encontrado no catálogo.");
                     } else {
@@ -107,12 +141,13 @@ public class Menu {
                     }
                     break;
                 case 3:
-                    System.out.println("Inserir ISBN do livro: ");
-                    String isbnMS = sc.nextLine();
-                    Livro livroMS = gerenciador.buscarLivro(isbnMS);
-                    if (livroMS == null) {
-                        System.out.println("Livro não encontrado no catálogo.");
-                    } else {
+                    System.out.println("Inserir ID do livro: ");
+                    int idMS = sc.nextInt();
+                    sc.nextLine(); // consumir quebra de linha
+
+                    try {
+                        Livro livroMS = gerenciador.buscarLivro(idMS);
+
                         System.out.println("Novo status: 1-Quero ler | 2-Lendo | 3-Lido | 4-Abandonado");
                         int opStatus = Integer.parseInt(sc.nextLine());
 
@@ -136,32 +171,34 @@ public class Menu {
                         }
                         leitor.mudarStatusLeitura(livroMS, status);
                         System.out.println("Status modificado!");
+
+                    } catch (LivroNaoAdicionadoException e) {
+                        e.getMessage();
                     }
                     break;
-                case 4:
-                    System.out.println("Inserir ISBN do livro: ");
-                    String isbnAv = sc.nextLine();
-                    Livro livroAv = gerenciador.buscarLivro(isbnAv);
 
-                    if (livroAv == null) {
-                        System.out.println("Livro não encontrado no catálogo.");
-                    } else {
+                case 4:
+                    System.out.println("Inserir ID do livro: ");
+                    int idAv = Integer.parseInt(sc.nextLine());
+
+                    try {
+                        Livro livroAv = gerenciador.buscarLivro(idAv);
+
                         System.out.println("Digite sua resenha: ");
                         String texto = sc.nextLine();
 
-                    System.out.println("Digite a nota (0 a 5): ");
-                    int nota = Integer.parseInt(sc.nextLine());
+                        System.out.println("Digite a nota (0 a 5): ");
+                        int nota = Integer.parseInt(sc.nextLine());
 
-                    LocalDate data = LocalDate.now();
+                        LocalDate data = LocalDate.now();
 
-                    try {
                         livroAv.avaliar(nota, texto); //tem que fazer o avaliar no livro
                         System.out.println("Resenha registrada!");
-                    } catch (AvaliacaoInvalidaException e) {
+
+                    } catch (LivroNaoAdicionadoException e || AvaliacaoInvalidaException e) {
                         System.out.println(e.getMessage());
                     }
-                }
-                break;
+                    break;
                 case 5:
                     break;
             }
