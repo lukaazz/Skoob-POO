@@ -1,29 +1,27 @@
 package persistencia;
 
+import controle.GerenciadorArquivos;
 import excecoes.AdministradorJaExisteException;
 import excecoes.AutenticacaoInvalidaException;
+import excecoes.IdNaoEncontradoException;
 import excecoes.LeitorJaExisteException;
-import java.util.*;
-import modelo.avaliacao.Resenha;
+import excecoes.LivroJaCadastradoCatalogoException;
+import modelo.livro.Biblioteca;
 import modelo.livro.Livro;
 import modelo.usuario.Administrador;
 import modelo.usuario.Leitor;
 import modelo.usuario.Usuario;
 
 public class GerenciadorSkoob {
-    
+
     private static GerenciadorSkoob instancia;
 
-    private Map<String, Livro> catalogo;
-    private Map<String, Leitor> leitores;
-    private Map<String, Administrador> admins;
-    private List<Resenha> resenhas;
+    private GerenciadorArquivos arquivos;
+    private Biblioteca biblioteca;
 
     private GerenciadorSkoob() {
-        catalogo = new HashMap<>();
-        leitores = new HashMap<>();
-        admins = new HashMap<>();
-        resenhas = new ArrayList<>();
+        this.arquivos = new GerenciadorArquivos();
+        this.biblioteca = new Biblioteca();
     }
 
     public static GerenciadorSkoob getInstancia() {
@@ -34,46 +32,29 @@ public class GerenciadorSkoob {
     }
 
     public Usuario autenticar(String email, String senha) throws AutenticacaoInvalidaException {
-
-        if (leitores.containsKey(email)) {
-            if (leitores.get(email).senhaCerta(senha)) {
-                System.out.println("Logando...");
-                return leitores.get(email);
-            } else {
-                throw new AutenticacaoInvalidaException();
-            }
-
-        } else if (admins.containsKey(email)) {
-            if (admins.get(email).senhaCerta(senha)) {
-                System.out.println("Logando...");
-                return admins.get(email);
-            } else {
-                throw new AutenticacaoInvalidaException();
-            }
-
-        } else {
-            throw new AutenticacaoInvalidaException();
-        }
+        Usuario usuario = arquivos.autenticar(email, senha);
+        System.out.println("Logando...");
+        return usuario;
     }
 
     public void cadastrarLeitor(Leitor leitor) throws LeitorJaExisteException {
-
-        if(leitores.containsKey(leitor.getEmail())) {
-            throw new LeitorJaExisteException();
-        } else {
-            leitores.put(leitor.getEmail(), leitor);
-        }
+        arquivos.adicionarLeitor(leitor);
     }
 
     public void cadastrarAdministrador(Administrador admin) throws AdministradorJaExisteException {
-        if(admins.containsKey(admin.getEmail())) {
-            throw new AdministradorJaExisteException();
-        } else {
-            admins.put(admin.getEmail(), admin);
-        }
+        arquivos.adicionarAdministrador(admin);
     }
 
-    public Livro buscarLivro(String isbn) {
-        return catalogo.get(isbn);
+    public void cadastrarLivro(Livro livro) throws LivroJaCadastradoCatalogoException {
+        biblioteca.adicionarLivro(livro);
     }
+
+    public Livro buscarLivro(int id) throws IdNaoEncontradoException {
+        return biblioteca.buscarLivro(id);
+    }
+
+    public void removerLivro(int id) throws IdNaoEncontradoException {
+        biblioteca.removerLivro(id);
+    }
+
 }
