@@ -1,8 +1,8 @@
 // add outros arquivos
-
 package controle;
 
 import excecoes.AdministradorJaExisteException;
+import excecoes.AutenticacaoInvalidaException;
 import excecoes.LeitorJaExisteException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -14,9 +14,10 @@ import java.util.HashMap;
 import java.util.Map;
 import modelo.usuario.Administrador;
 import modelo.usuario.Leitor;
-
+import modelo.usuario.Usuario;
 
 public class GerenciadorArquivos {
+
     private Path caminhoLeitores = Path.of("src/persistencia/leitores.dat");
     private Path caminhoAdministradores = Path.of("src/persistencia/administradores.dat");
 
@@ -25,7 +26,7 @@ public class GerenciadorArquivos {
 
     public GerenciadorArquivos() {
 
-        if(!caminhoLeitores.toFile().exists()) {
+        if (!caminhoLeitores.toFile().exists()) {
 
             try {
                 caminhoLeitores.toFile().createNewFile();
@@ -46,7 +47,7 @@ public class GerenciadorArquivos {
             }
         }
 
-        if(!caminhoAdministradores.toFile().exists()) {
+        if (!caminhoAdministradores.toFile().exists()) {
 
             try {
                 caminhoAdministradores.toFile().createNewFile();
@@ -70,7 +71,7 @@ public class GerenciadorArquivos {
 
     public void adicionarLeitor(Leitor leitor) throws LeitorJaExisteException {
 
-        if(leitores.containsKey(leitor.getEmail())) {
+        if (leitores.containsKey(leitor.getEmail())) {
             throw new LeitorJaExisteException();
         } else {
             leitores.put(leitor.getEmail(), leitor);
@@ -79,8 +80,8 @@ public class GerenciadorArquivos {
     }
 
     public void adicionarAdministrador(Administrador administrador) throws AdministradorJaExisteException {
-        
-        if(administradores.containsKey(administrador.getEmail())) {
+
+        if (administradores.containsKey(administrador.getEmail())) {
             throw new AdministradorJaExisteException();
         } else {
             administradores.put(administrador.getEmail(), administrador);
@@ -101,6 +102,27 @@ public class GerenciadorArquivos {
             oos.writeObject(administradores);
         } catch (IOException e) {
             System.out.println("Erro ao salvar os administradores");
+        }
+    }
+
+    public Usuario autenticar(String email, String senha) throws AutenticacaoInvalidaException {
+        
+        if (this.leitores.containsKey(email)) {
+            if (this.leitores.get(email).senhaCerta(senha)) {
+                return this.leitores.get(email);
+            } else {
+                throw new AutenticacaoInvalidaException();
+            }
+
+        } else if (this.administradores.containsKey(email)) {
+            if (this.administradores.get(email).senhaCerta(senha)) {
+                return this.administradores.get(email);
+            } else {
+                throw new AutenticacaoInvalidaException();
+            }
+
+        } else {
+            throw new AutenticacaoInvalidaException();
         }
     }
 
