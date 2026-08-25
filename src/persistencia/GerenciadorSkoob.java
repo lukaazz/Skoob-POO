@@ -16,8 +16,8 @@ public class GerenciadorSkoob {
 
     private static GerenciadorSkoob instancia;
 
-    private GerenciadorArquivos arquivos;
-    private Biblioteca biblioteca;
+    private final GerenciadorArquivos arquivos;
+    private final Biblioteca biblioteca;
 
     private GerenciadorSkoob() {
         this.arquivos = new GerenciadorArquivos();
@@ -47,6 +47,7 @@ public class GerenciadorSkoob {
 
     public void cadastrarLivro(Livro livro) throws LivroJaCadastradoCatalogoException {
         biblioteca.adicionarLivro(livro);
+        arquivos.salvarCatalogo();
     }
 
     public Livro buscarLivro(int id) throws IdNaoEncontradoException {
@@ -55,6 +56,7 @@ public class GerenciadorSkoob {
 
     public void removerLivro(int id) throws IdNaoEncontradoException {
         biblioteca.removerLivro(id);
+        arquivos.salvarCatalogo();
     }
 
 }

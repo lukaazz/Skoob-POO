@@ -59,7 +59,6 @@ public class Menu {
     }
 
     private void cadastrarUsuario() {
-        /*-------------------- ARRUMAR -------------------- */
         System.out.println("1 - Leitor | 2 - Administrador\n");
         int op = sc.nextInt();
         sc.nextLine();
@@ -69,10 +68,31 @@ public class Menu {
         String email = sc.nextLine();
         System.out.println("Insira senha: ");
         String senha = sc.nextLine();
+
         if (op == 1) {
-            Leitor l = new Leitor(nome, email, senha);
+
+            try {
+                Leitor l = new Leitor(nome, email, senha);
+                gerenciador.cadastrarLeitor(l);
+                System.out.println("Leitor cadastrado com sucesso.");
+
+            } catch (LeitorJaExisteException e) {
+                System.out.println("Leitor já cadastrado!");
+            }
+
+
         } else if (op == 2) {
-            Administrador a = new Administrador(nome, email, senha);
+
+            try {
+                Administrador a = new Administrador(nome, email, senha);
+                gerenciador.cadastrarAdministrador(a);
+                System.out.println("Administrador cadastrado com sucesso.");
+
+            } catch (AdministradorJaExisteException e) {
+                System.out.println("Administrador já cadastrado!");
+            }
+
+            
         }
     }
 
@@ -84,6 +104,7 @@ public class Menu {
             System.out.println(
                     "1 - Adicionar livro a estante\n2 - Remover livro da estante\n3 - Mudar status livro\n4 - Fazer resenha\n5 - Sair\n");
             op = sc.nextInt();
+            sc.nextLine();
 
             switch (op) {
                 case 1:
@@ -91,10 +112,9 @@ public class Menu {
                     int id = sc.nextInt();
                     sc.nextLine(); // consumir quebra de linha
 
-                    
                     try {
                         Livro livro = gerenciador.buscarLivro(id);
-    
+
                         System.out.println("Escolha o status de leitura: 1-Quero ler | 2-Lendo | 3-Lido | 4-Abandonado");
                         op2 = sc.nextInt();
 
@@ -122,7 +142,7 @@ public class Menu {
                     } catch (IdNaoEncontradoException | LivroJaAdicionadoException e) {
                         System.out.println("Livro ja esta presente na estante.");
                     }
-                    
+
                     break;
                 case 2:
                     System.out.println("Inserir ID do livro: ");
@@ -132,12 +152,9 @@ public class Menu {
                     try {
                         Livro livroR = gerenciador.buscarLivro(idR);
 
-                        if (livroR == null) {
-                            System.out.println("Livro não encontrado no catálogo.");
-                        } else {
-                            leitor.removerLivroEstante(livroR);
-                            System.out.println("Livro removido da estante!");
-                        }
+                        leitor.removerLivroEstante(livroR);
+                        System.out.println("Livro removido da estante!");
+
                     } catch (LivroNaoAdicionadoException | IdNaoEncontradoException e) {
                         System.out.println(e.getMessage());
                     }

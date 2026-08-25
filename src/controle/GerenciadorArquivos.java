@@ -1,6 +1,6 @@
-// add outros arquivos
-package controle;
 
+package controle;
+// add outros arquivos
 import excecoes.AdministradorJaExisteException;
 import excecoes.AutenticacaoInvalidaException;
 import excecoes.LeitorJaExisteException;
