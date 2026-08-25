@@ -3,7 +3,7 @@ package controle;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-import excecoes.AutenticacaoInvalidaException;
+import excecoes.*;
 import modelo.livro.Livro;
 import modelo.usuario.Administrador;
 import modelo.usuario.Leitor;
