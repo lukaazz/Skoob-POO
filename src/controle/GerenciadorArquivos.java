@@ -12,6 +12,8 @@ import java.io.ObjectOutputStream;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
+import modelo.livro.Biblioteca;
+import modelo.livro.Livro;
 import modelo.usuario.Administrador;
 import modelo.usuario.Leitor;
 import modelo.usuario.Usuario;
@@ -20,6 +22,9 @@ public class GerenciadorArquivos {
 
     private Path caminhoLeitores = Path.of("src/persistencia/leitores.dat");
     private Path caminhoAdministradores = Path.of("src/persistencia/administradores.dat");
+
+    private Path caminhoBiblioteca = Path.of("src/persistencia/biblioteca.dat");
+    private Biblioteca biblioteca;
 
     private Map<String, Leitor> leitores;
     private Map<String, Administrador> administradores;
@@ -60,6 +65,7 @@ public class GerenciadorArquivos {
         } else {
 
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(caminhoAdministradores.toFile()))) {
+
                 administradores = (Map<String, Administrador>) ois.readObject();
 
             } catch (IOException | ClassNotFoundException e) {
@@ -67,6 +73,33 @@ public class GerenciadorArquivos {
                 administradores = new HashMap<>();
             }
         }
+
+        this.biblioteca = new Biblioteca();
+
+        if (!caminhoBiblioteca.toFile().exists()) {
+            try {
+                caminhoBiblioteca.toFile().createNewFile();
+                salvarCatalogo();
+            } catch (IOException e) {
+                System.out.println("Erro ao criar o arquivo da biblioteca");
+            }
+        } else {
+
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(caminhoBiblioteca.toFile()))) {
+
+                @SuppressWarnings("unchecked")
+                Map<Integer, Livro> catalogoCarregado = (Map<Integer, Livro>) ois.readObject();
+
+                this.biblioteca.carregarCatalogo(catalogoCarregado);
+
+            } catch (IOException | ClassNotFoundException e) {
+                System.out.println("Erro ao ler o catálogo da biblioteca");
+            }
+        }
+    }
+
+    public Biblioteca getBiblioteca() {
+        return biblioteca;
     }
 
     public void adicionarLeitor(Leitor leitor) throws LeitorJaExisteException {
@@ -105,8 +138,17 @@ public class GerenciadorArquivos {
         }
     }
 
+    public final void salvarCatalogo() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(caminhoBiblioteca.toFile()))) {
+            // Grava apenas o HashMap do catálogo no arquivo
+            oos.writeObject(this.biblioteca.getCatalogo());
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar o catálogo da biblioteca");
+        }
+    }
+
     public Usuario autenticar(String email, String senha) throws AutenticacaoInvalidaException {
-        
+
         if (this.leitores.containsKey(email)) {
             if (this.leitores.get(email).senhaCerta(senha)) {
                 return this.leitores.get(email);

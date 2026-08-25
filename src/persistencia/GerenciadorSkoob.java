@@ -21,7 +21,7 @@ public class GerenciadorSkoob {
 
     private GerenciadorSkoob() {
         this.arquivos = new GerenciadorArquivos();
-        this.biblioteca = new Biblioteca();
+        this.biblioteca = arquivos.getBiblioteca();
     }
 
     public static GerenciadorSkoob getInstancia() {
