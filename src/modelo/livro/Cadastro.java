@@ -1,14 +1,14 @@
 package modelo.livro;
 
+import excecoes.OpcaoGeneroInvalidaException;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 import modelo.FuncoesFormatacao;
 
-
 public class Cadastro {
 
-    public Livro cadastrarLivro(Scanner sc) {
+    public Livro cadastrarLivro(Scanner sc) throws OpcaoGeneroInvalidaException {
 
         Livro livro;
 
@@ -27,14 +27,13 @@ public class Cadastro {
         System.out.print(FuncoesFormatacao.solicitarCampo("Sinopse"));
         String sinopse = sc.nextLine();
 
-
         System.out.println("\nQuais são os gêneros do livro?");
 
-        while(continuar) {
+        while (continuar) {
 
             System.out.println("\n");
 
-            for(int i = 0; i < todosGeneros.length; i++) {
+            for (int i = 0; i < todosGeneros.length; i++) {
                 System.out.println((i + 1) + ". " + todosGeneros[i]);
             }
 
@@ -44,22 +43,31 @@ public class Cadastro {
             sc.nextLine();
             // lançar exceção para verificar se opção é valida
 
-            Genero escolhido = todosGeneros[opcao_genero - 1];
-            generosEscolhidos.add(escolhido);
+            try {
 
+                if (opcao_genero > todosGeneros.length || opcao_genero <= 0) {
+                    throw new OpcaoGeneroInvalidaException();
+                }
 
-            System.out.println("\n");
-            System.out.print(FuncoesFormatacao.solicitarCampo("Deseja adicionar outro gênero? (s/n)"));
-            
-            String opcao_continuar = sc.nextLine();
+                Genero escolhido = todosGeneros[opcao_genero - 1];
+                generosEscolhidos.add(escolhido);
 
-            if(opcao_continuar.equals("s")) {
-                continuar = true;
-            } else if (opcao_continuar.equals("n")) {
-                continuar = false;
+                System.out.println("\n");
+                System.out.print(FuncoesFormatacao.solicitarCampo("Deseja adicionar outro gênero? (s/n)"));
+
+                String opcao_continuar = sc.nextLine();
+
+                if (opcao_continuar.equals("s")) {
+                    continuar = true;
+                } else if (opcao_continuar.equals("n")) {
+                    continuar = false;
+                }
+
+            } catch (OpcaoGeneroInvalidaException e) {
+                System.err.println(e.getMessage());
             }
-            // tratamento de exceção
-        }
+            
+        }   
 
         System.out.print(FuncoesFormatacao.exibirSubtitulo("TIPO DE LIVRO"));
         System.out.println(" 1. Livro Físico");
@@ -104,5 +112,5 @@ public class Cadastro {
 
         return livro;
     }
-    
+
 }
