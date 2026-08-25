@@ -3,7 +3,6 @@ package modelo.usuario;
 import excecoes.AvaliacaoInvalidaException;
 import excecoes.LivroJaAdicionadoException;
 import excecoes.LivroNaoAdicionadoException;
-import java.util.Map;
 import modelo.avaliacao.Resenha;
 import modelo.livro.Livro;
 
@@ -17,8 +16,8 @@ public class Leitor extends Usuario {
         this.estante = new Estante();
     }
 
-    public Map<Livro, StatusLeitura> getEstante() {
-        return estante.getLivros();
+    public Estante getEstante() {
+        return estante;
     }
 
     public void adicionarLivroEstante(Livro livro, StatusLeitura status) throws LivroJaAdicionadoException {
@@ -34,7 +33,7 @@ public class Leitor extends Usuario {
             Resenha resenha = new Resenha(this, texto, nota, java.time.LocalDate.now(), livro);
             return resenha;
         } else {
-            throw new LivroNaoAdicionadoException(livro.getTitulo());
+            throw new LivroNaoAdicionadoException();
         }
     }
 }

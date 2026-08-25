@@ -1,9 +1,8 @@
 package controle;
 
+import excecoes.*;
 import java.time.LocalDate;
 import java.util.Scanner;
-
-import excecoes.*;
 import modelo.livro.Livro;
 import modelo.usuario.Administrador;
 import modelo.usuario.Leitor;
@@ -92,53 +91,57 @@ public class Menu {
                     int id = sc.nextInt();
                     sc.nextLine(); // consumir quebra de linha
 
-                    Livro livro = gerenciador.buscarLivro(id);
-                    if (livro == null) {
-                        System.out.println("Livro não encontrado no catálogo.");
-                    } else {
-
+                    
+                    try {
+                        Livro livro = gerenciador.buscarLivro(id);
+    
                         System.out.println("Escolha o status de leitura: 1-Quero ler | 2-Lendo | 3-Lido | 4-Abandonado");
                         op2 = sc.nextInt();
 
-                        try {
-                            switch (op2) {
-                                case 1:
-                                    leitor.adicionarLivroEstante(livro, StatusLeitura.QUERO_LER);
-                                    System.out.println("Livro adicionado à estante!");
-                                    break;
-                                case 2:
-                                    leitor.adicionarLivroEstante(livro, StatusLeitura.LENDO);
-                                    System.out.println("Livro adicionado à estante!");
-                                    break;
-                                case 3:
-                                    leitor.adicionarLivroEstante(livro, StatusLeitura.LIDO);
-                                    System.out.println("Livro adicionado à estante!");
-                                    break;
-                                case 4:
-                                    leitor.adicionarLivroEstante(livro, StatusLeitura.ABANDONADO);
-                                    System.out.println("Livro adicionado à estante!");
-                                    break;
-                                default:
-                                    System.out.println("Opcao invalida. Livro nao adicionado.");
-                            }
-
-                        } catch (LivroJaAdicionadoException e) {
-                            System.out.println("Livro ja esta presente na estante.");
+                        switch (op2) {
+                            case 1:
+                                leitor.adicionarLivroEstante(livro, StatusLeitura.QUERO_LER);
+                                System.out.println("Livro adicionado à estante!");
+                                break;
+                            case 2:
+                                leitor.adicionarLivroEstante(livro, StatusLeitura.LENDO);
+                                System.out.println("Livro adicionado à estante!");
+                                break;
+                            case 3:
+                                leitor.adicionarLivroEstante(livro, StatusLeitura.LIDO);
+                                System.out.println("Livro adicionado à estante!");
+                                break;
+                            case 4:
+                                leitor.adicionarLivroEstante(livro, StatusLeitura.ABANDONADO);
+                                System.out.println("Livro adicionado à estante!");
+                                break;
+                            default:
+                                System.out.println("Opcao invalida. Livro nao adicionado.");
                         }
+
+                    } catch (IdNaoEncontradoException | LivroJaAdicionadoException e) {
+                        System.out.println("Livro ja esta presente na estante.");
                     }
+                    
                     break;
                 case 2:
                     System.out.println("Inserir ID do livro: ");
                     int idR = sc.nextInt();
                     sc.nextLine(); // consumir quebra de linha
-                    Livro livroR = gerenciador.buscarLivro(idR);
 
-                    if (livroR == null) {
-                        System.out.println("Livro não encontrado no catálogo.");
-                    } else {
-                        leitor.removerLivroEstante(livro);
-                        System.out.println("Livro removido da estante!");
+                    try {
+                        Livro livroR = gerenciador.buscarLivro(idR);
+
+                        if (livroR == null) {
+                            System.out.println("Livro não encontrado no catálogo.");
+                        } else {
+                            leitor.removerLivroEstante(livroR);
+                            System.out.println("Livro removido da estante!");
+                        }
+                    } catch (LivroNaoAdicionadoException | IdNaoEncontradoException e) {
+                        System.out.println(e.getMessage());
                     }
+
                     break;
                 case 3:
                     System.out.println("Inserir ID do livro: ");
@@ -169,11 +172,11 @@ public class Menu {
                                 status = StatusLeitura.QUERO_LER;
                                 break;
                         }
-                        leitor.mudarStatusLeitura(livroMS, status);
+                        leitor.getEstante().mudarStatusLeitura(livroMS, status);
                         System.out.println("Status modificado!");
 
-                    } catch (LivroNaoAdicionadoException e) {
-                        e.getMessage();
+                    } catch (LivroNaoAdicionadoException | IdNaoEncontradoException e) {
+                        System.out.println(e.getMessage());
                     }
                     break;
 
@@ -192,10 +195,10 @@ public class Menu {
 
                         LocalDate data = LocalDate.now();
 
-                        livroAv.avaliar(nota, texto); //tem que fazer o avaliar no livro
+                        leitor.resenharLivro(livroAv, texto, nota);
                         System.out.println("Resenha registrada!");
 
-                    } catch (LivroNaoAdicionadoException e || AvaliacaoInvalidaException e) {
+                    } catch (IdNaoEncontradoException | LivroNaoAdicionadoException | AvaliacaoInvalidaException e) {
                         System.out.println(e.getMessage());
                     }
                     break;

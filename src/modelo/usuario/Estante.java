@@ -29,7 +29,7 @@ public class Estante implements Serializable {
     public void removerLivro(Livro livro) throws LivroNaoAdicionadoException {
 
         if(!livros.containsKey(livro)) {
-            throw new LivroNaoAdicionadoException(livro.getTitulo());
+            throw new LivroNaoAdicionadoException();
         } else {
             livros.remove(livro);
         }
@@ -45,7 +45,7 @@ public class Estante implements Serializable {
                 //vai substituir o status antigo pelo novo (o objeto nao muda, apenas o valor associado a ele)
                 livros.put(livro, novoStatus);
             } else {
-                throw new LivroNaoAdicionadoException(livro.getTitulo());
+                throw new LivroNaoAdicionadoException();
             }
     }
 
