@@ -38,7 +38,7 @@ public class GerenciadorSkoob {
     }
 
     public void cadastrarLeitor(Leitor leitor) throws LeitorJaExisteException {
-        arquivos.adicionarLeitor(leitor);
+        arquivos.adicionarLeitor(leitor);   
     }
 
     public void cadastrarAdministrador(Administrador admin) throws AdministradorJaExisteException {
