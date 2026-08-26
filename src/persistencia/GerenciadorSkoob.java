@@ -60,4 +60,14 @@ public class GerenciadorSkoob {
         arquivos.salvarCatalogo();
     }
 
+    // Lista o resumo de todos os livros cadastrados no catálogo
+    public void exibirTodosLivros() {
+        biblioteca.exibirTodosLivros();
+    }
+
+    // Exibe a ficha completa (todos os dados) de um livro específico
+    public void exibirFichaLivro(int id) throws IdNaoEncontradoException {
+        biblioteca.exibirFichaLivro(id);
+    }
+
 }

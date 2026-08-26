@@ -122,6 +122,7 @@ public class Menu {
 
             switch (op) {
                 case 1:
+                    gerenciador.exibirTodosLivros();
                     System.out.print(FuncoesFormatacao.solicitarCampo("ID do livro"));
                     int id = sc.nextInt();
                     sc.nextLine(); // consumir quebra de linha
@@ -162,6 +163,7 @@ public class Menu {
 
                     break;
                 case 2:
+                    gerenciador.exibirTodosLivros();
                     System.out.print(FuncoesFormatacao.solicitarCampo("ID do livro"));
                     int idR = sc.nextInt();
                     sc.nextLine(); // consumir quebra de linha
@@ -178,6 +180,7 @@ public class Menu {
 
                     break;
                 case 3:
+                    gerenciador.exibirTodosLivros();
                     System.out.print(FuncoesFormatacao.solicitarCampo("ID do livro"));
                     int idMS = sc.nextInt();
                     sc.nextLine(); // consumir quebra de linha
@@ -217,6 +220,7 @@ public class Menu {
                     break;
 
                 case 4:
+                    gerenciador.exibirTodosLivros();
                     System.out.print(FuncoesFormatacao.solicitarCampo("ID do livro"));
                     int idAv = Integer.parseInt(sc.nextLine());
 
@@ -281,6 +285,7 @@ public class Menu {
                     break;
 
                 case 2:
+                    gerenciador.exibirTodosLivros();
                     System.out.print(FuncoesFormatacao.solicitarCampo("ID do livro a remover"));
                     int idRemover = sc.nextInt();
                     sc.nextLine(); // consumir quebra de linha

@@ -5,6 +5,7 @@ import excecoes.LivroJaCadastradoCatalogoException;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import modelo.FuncoesFormatacao;
 
 // a
 public class Biblioteca implements Serializable {
@@ -60,11 +61,24 @@ public class Biblioteca implements Serializable {
         System.out.print(livro.resumo());
     }
 
-    public void exibirTodosLivros() throws IdNaoEncontradoException {
+    public void exibirTodosLivros() {
+
+        if (catalogo.isEmpty()) {
+            System.out.print(FuncoesFormatacao.exibirMensagem("Nenhum livro cadastrado no momento."));
+            return;
+        }
+
+        System.out.print(FuncoesFormatacao.exibirCabecalho("LIVROS CADASTRADOS"));
 
         for (Livro livro : catalogo.values()) {
-            exibirResumoLivro(livro.getId());
+            try {
+                exibirResumoLivro(livro.getId());
+            } catch (IdNaoEncontradoException e) {
+                // não deve ocorrer: o id percorrido vem do próprio catálogo
+            }
         }
+
+        System.out.print(FuncoesFormatacao.inserirDivisor());
     }
 
    

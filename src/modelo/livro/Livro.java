@@ -102,6 +102,7 @@ public abstract class Livro implements Serializable {
         String resultado = "";
 
         resultado += FuncoesFormatacao.inserirDivisor();
+        resultado += String.format(" ID        : %d%n", getId());
         resultado += String.format(" TÍTULO    : %s%n", getTitulo());
         resultado += String.format(" AUTOR     : %s%n", getAutor());
         resultado += FuncoesFormatacao.inserirLinha();
