@@ -80,7 +80,6 @@ public class Menu {
                 System.out.println("Leitor já cadastrado!");
             }
 
-
         } else if (op == 2) {
 
             try {
@@ -92,7 +91,6 @@ public class Menu {
                 System.out.println("Administrador já cadastrado!");
             }
 
-            
         }
     }
 
@@ -227,6 +225,59 @@ public class Menu {
 
     // Opções exclusivas do admin: adicionar/remover livro do catálogo
     private void exibirMenuAdmin(Administrador admin) {
-        // TODO: loop com as opções do admin
+        int op = 0;
+
+        while (op != 3) {
+            System.out.println("\n--- MENU DO ADMINISTRADOR ---");
+            System.out.println("1 - Adicionar livro ao catálogo");
+            System.out.println("2 - Remover livro do catálogo");
+            System.out.println("3 - Sair");
+            System.out.print("Escolha uma opção: ");
+
+            op = sc.nextInt();
+            sc.nextLine(); // consumir quebra de linha
+
+            switch (op) {
+                case 1:
+                    try {
+                        // Utiliza a classe Cadastro para receber os inputs e construir o Livro
+                        modelo.livro.Cadastro menuCadastro = new modelo.livro.Cadastro();
+                        Livro novoLivro = menuCadastro.cadastrarLivro(sc);
+
+                        // Chama o gerenciador para adicionar o livro e salvar no arquivo .dat
+                        gerenciador.cadastrarLivro(novoLivro);
+                        System.out.println("Livro adicionado ao catálogo com sucesso!");
+
+                    } catch (LivroJaCadastradoCatalogoException e) {
+                        System.out.println("Erro: Este livro já está cadastrado no catálogo.");
+                    } catch (Exception e) {
+                        System.out.println("Erro durante o cadastro: " + e.getMessage());
+                    }
+                    break;
+
+                case 2:
+                    System.out.print("Inserir ID do livro a ser removido: ");
+                    int idRemover = sc.nextInt();
+                    sc.nextLine(); // consumir quebra de linha
+
+                    try {
+                        // Chama o gerenciador para remover o livro da biblioteca e atualizar o arquivo .dat
+                        gerenciador.removerLivro(idRemover);
+                        System.out.println("Livro removido do catálogo com sucesso!");
+
+                    } catch (IdNaoEncontradoException e) {
+                        System.out.println("Erro: Não foi encontrado um livro com este ID no catálogo.");
+                    }
+                    break;
+
+                case 3:
+                    System.out.println("Encerrando a sessão do administrador...");
+                    break;
+
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+                    break;
+            }
+        }
     }
 }
