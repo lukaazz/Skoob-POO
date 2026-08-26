@@ -5,7 +5,7 @@ import java.io.Serializable;
 public abstract class Usuario implements Serializable {
     private String nome;
     private String email;
-    private transient String senha;
+    private String senha;
 
     private static final long serialVersionUID = 1L;
 
