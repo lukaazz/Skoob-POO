@@ -3,6 +3,7 @@ package controle;
 import excecoes.*;
 import java.time.LocalDate;
 import java.util.Scanner;
+import modelo.FuncoesFormatacao;
 import modelo.livro.Livro;
 import modelo.usuario.Administrador;
 import modelo.usuario.Leitor;
@@ -22,7 +23,8 @@ public class Menu {
     public void iniciar() {
         int op = 0;
         while (op != 3) {
-            System.out.println("MENU\n1 - Login\n2 - Cadastrar\n3 - Sair\n");
+            System.out.print(FuncoesFormatacao.exibirMenu("MENU PRINCIPAL", "Login", "Cadastrar", "Sair"));
+            System.out.print(FuncoesFormatacao.solicitarCampo("Escolha uma opção"));
             op = sc.nextInt();
             sc.nextLine();
             switch (op) {
@@ -33,15 +35,21 @@ public class Menu {
                     cadastrarUsuario();
                     break;
                 case 3:
+                    System.out.print(FuncoesFormatacao.exibirMensagem("Encerrando o programa..."));
+                    break;
+                default:
+                    System.out.print(FuncoesFormatacao.exibirErro("Opção inválida."));
                     break;
             }
         }
     }
 
     private void fazerLogin() {
-        System.out.println("Inserir email: ");
+        System.out.print(FuncoesFormatacao.exibirCabecalho("LOGIN"));
+        System.out.println();
+        System.out.print(FuncoesFormatacao.solicitarCampo("Email"));
         String email = sc.nextLine();
-        System.out.println("Inserir senha: ");
+        System.out.print(FuncoesFormatacao.solicitarCampo("Senha"));
         String senha = sc.nextLine();
 
         try {
@@ -54,19 +62,20 @@ public class Menu {
             }
 
         } catch (AutenticacaoInvalidaException e) {
-            System.out.println("Login ou senha inválidos.");
+            System.out.print(FuncoesFormatacao.exibirErro("Login ou senha inválidos."));
         }
     }
 
     private void cadastrarUsuario() {
-        System.out.println("1 - Leitor | 2 - Administrador\n");
+        System.out.print(FuncoesFormatacao.exibirMenu("CADASTRO DE USUÁRIO", "Leitor", "Administrador"));
+        System.out.print(FuncoesFormatacao.solicitarCampo("Escolha uma opção"));
         int op = sc.nextInt();
         sc.nextLine();
-        System.out.println("Insira nome: ");
+        System.out.print(FuncoesFormatacao.solicitarCampo("Nome"));
         String nome = sc.nextLine();
-        System.out.println("Insira email: ");
+        System.out.print(FuncoesFormatacao.solicitarCampo("Email"));
         String email = sc.nextLine();
-        System.out.println("Insira senha: ");
+        System.out.print(FuncoesFormatacao.solicitarCampo("Senha"));
         String senha = sc.nextLine();
 
         if (op == 1) {
@@ -74,10 +83,10 @@ public class Menu {
             try {
                 Leitor l = new Leitor(nome, email, senha);
                 gerenciador.cadastrarLeitor(l);
-                System.out.println("Leitor cadastrado com sucesso.");
+                System.out.print(FuncoesFormatacao.exibirMensagem("Leitor cadastrado com sucesso."));
 
             } catch (LeitorJaExisteException e) {
-                System.out.println("Leitor já cadastrado!");
+                System.out.print(FuncoesFormatacao.exibirErro("Leitor já cadastrado!"));
             }
 
         } else if (op == 2) {
@@ -85,12 +94,14 @@ public class Menu {
             try {
                 Administrador a = new Administrador(nome, email, senha);
                 gerenciador.cadastrarAdministrador(a);
-                System.out.println("Administrador cadastrado com sucesso.");
+                System.out.print(FuncoesFormatacao.exibirMensagem("Administrador cadastrado com sucesso."));
 
             } catch (AdministradorJaExisteException e) {
-                System.out.println("Administrador já cadastrado!");
+                System.out.print(FuncoesFormatacao.exibirErro("Administrador já cadastrado!"));
             }
 
+        } else {
+            System.out.print(FuncoesFormatacao.exibirErro("Opção inválida."));
         }
     }
 
@@ -99,51 +110,59 @@ public class Menu {
         int op2 = 0;
 
         while (op != 5) {
-            System.out.println(
-                    "1 - Adicionar livro a estante\n2 - Remover livro da estante\n3 - Mudar status livro\n4 - Fazer resenha\n5 - Sair\n");
+            System.out.print(FuncoesFormatacao.exibirMenu("MENU DO LEITOR",
+                    "Adicionar livro à estante",
+                    "Remover livro da estante",
+                    "Mudar status do livro",
+                    "Fazer resenha",
+                    "Sair"));
+            System.out.print(FuncoesFormatacao.solicitarCampo("Escolha uma opção"));
             op = sc.nextInt();
             sc.nextLine();
 
             switch (op) {
                 case 1:
-                    System.out.println("Inserir ID do livro: ");
+                    System.out.print(FuncoesFormatacao.solicitarCampo("ID do livro"));
                     int id = sc.nextInt();
                     sc.nextLine(); // consumir quebra de linha
 
                     try {
                         Livro livro = gerenciador.buscarLivro(id);
 
-                        System.out.println("Escolha o status de leitura: 1-Quero ler | 2-Lendo | 3-Lido | 4-Abandonado");
+                        System.out.print(FuncoesFormatacao.exibirMenu("STATUS DE LEITURA",
+                                "Quero ler", "Lendo", "Lido", "Abandonado"));
+                        System.out.print(FuncoesFormatacao.solicitarCampo("Escolha uma opção"));
                         op2 = sc.nextInt();
+                        sc.nextLine();
 
                         switch (op2) {
                             case 1:
                                 leitor.adicionarLivroEstante(livro, StatusLeitura.QUERO_LER);
-                                System.out.println("Livro adicionado à estante!");
+                                System.out.print(FuncoesFormatacao.exibirMensagem("Livro adicionado à estante!"));
                                 break;
                             case 2:
                                 leitor.adicionarLivroEstante(livro, StatusLeitura.LENDO);
-                                System.out.println("Livro adicionado à estante!");
+                                System.out.print(FuncoesFormatacao.exibirMensagem("Livro adicionado à estante!"));
                                 break;
                             case 3:
                                 leitor.adicionarLivroEstante(livro, StatusLeitura.LIDO);
-                                System.out.println("Livro adicionado à estante!");
+                                System.out.print(FuncoesFormatacao.exibirMensagem("Livro adicionado à estante!"));
                                 break;
                             case 4:
                                 leitor.adicionarLivroEstante(livro, StatusLeitura.ABANDONADO);
-                                System.out.println("Livro adicionado à estante!");
+                                System.out.print(FuncoesFormatacao.exibirMensagem("Livro adicionado à estante!"));
                                 break;
                             default:
-                                System.out.println("Opcao invalida. Livro nao adicionado.");
+                                System.out.print(FuncoesFormatacao.exibirErro("Opção inválida. Livro não adicionado."));
                         }
 
                     } catch (IdNaoEncontradoException | LivroJaAdicionadoException e) {
-                        System.out.println("Livro ja esta presente na estante.");
+                        System.out.print(FuncoesFormatacao.exibirErro("Livro já está presente na estante."));
                     }
 
                     break;
                 case 2:
-                    System.out.println("Inserir ID do livro: ");
+                    System.out.print(FuncoesFormatacao.solicitarCampo("ID do livro"));
                     int idR = sc.nextInt();
                     sc.nextLine(); // consumir quebra de linha
 
@@ -151,22 +170,24 @@ public class Menu {
                         Livro livroR = gerenciador.buscarLivro(idR);
 
                         leitor.removerLivroEstante(livroR);
-                        System.out.println("Livro removido da estante!");
+                        System.out.print(FuncoesFormatacao.exibirMensagem("Livro removido da estante!"));
 
                     } catch (LivroNaoAdicionadoException | IdNaoEncontradoException e) {
-                        System.out.println(e.getMessage());
+                        System.out.print(FuncoesFormatacao.exibirErro(e.getMessage()));
                     }
 
                     break;
                 case 3:
-                    System.out.println("Inserir ID do livro: ");
+                    System.out.print(FuncoesFormatacao.solicitarCampo("ID do livro"));
                     int idMS = sc.nextInt();
                     sc.nextLine(); // consumir quebra de linha
 
                     try {
                         Livro livroMS = gerenciador.buscarLivro(idMS);
 
-                        System.out.println("Novo status: 1-Quero ler | 2-Lendo | 3-Lido | 4-Abandonado");
+                        System.out.print(FuncoesFormatacao.exibirMenu("NOVO STATUS",
+                                "Quero ler", "Lendo", "Lido", "Abandonado"));
+                        System.out.print(FuncoesFormatacao.solicitarCampo("Escolha uma opção"));
                         int opStatus = Integer.parseInt(sc.nextLine());
 
                         StatusLeitura status;
@@ -188,36 +209,40 @@ public class Menu {
                                 break;
                         }
                         leitor.getEstante().mudarStatusLeitura(livroMS, status);
-                        System.out.println("Status modificado!");
+                        System.out.print(FuncoesFormatacao.exibirMensagem("Status modificado!"));
 
                     } catch (LivroNaoAdicionadoException | IdNaoEncontradoException e) {
-                        System.out.println(e.getMessage());
+                        System.out.print(FuncoesFormatacao.exibirErro(e.getMessage()));
                     }
                     break;
 
                 case 4:
-                    System.out.println("Inserir ID do livro: ");
+                    System.out.print(FuncoesFormatacao.solicitarCampo("ID do livro"));
                     int idAv = Integer.parseInt(sc.nextLine());
 
                     try {
                         Livro livroAv = gerenciador.buscarLivro(idAv);
 
-                        System.out.println("Digite sua resenha: ");
+                        System.out.print(FuncoesFormatacao.solicitarCampo("Sua resenha"));
                         String texto = sc.nextLine();
 
-                        System.out.println("Digite a nota (0 a 5): ");
+                        System.out.print(FuncoesFormatacao.solicitarCampo("Nota (0 a 5)"));
                         int nota = Integer.parseInt(sc.nextLine());
 
                         LocalDate data = LocalDate.now();
 
                         leitor.resenharLivro(livroAv, texto, nota);
-                        System.out.println("Resenha registrada!");
+                        System.out.print(FuncoesFormatacao.exibirMensagem("Resenha registrada!"));
 
                     } catch (IdNaoEncontradoException | LivroNaoAdicionadoException | AvaliacaoInvalidaException e) {
-                        System.out.println(e.getMessage());
+                        System.out.print(FuncoesFormatacao.exibirErro(e.getMessage()));
                     }
                     break;
                 case 5:
+                    System.out.print(FuncoesFormatacao.exibirMensagem("Encerrando a sessão do leitor..."));
+                    break;
+                default:
+                    System.out.print(FuncoesFormatacao.exibirErro("Opção inválida."));
                     break;
             }
         }
@@ -228,11 +253,11 @@ public class Menu {
         int op = 0;
 
         while (op != 3) {
-            System.out.println("\n--- MENU DO ADMINISTRADOR ---");
-            System.out.println("1 - Adicionar livro ao catálogo");
-            System.out.println("2 - Remover livro do catálogo");
-            System.out.println("3 - Sair");
-            System.out.print("Escolha uma opção: ");
+            System.out.print(FuncoesFormatacao.exibirMenu("MENU DO ADMINISTRADOR",
+                    "Adicionar livro ao catálogo",
+                    "Remover livro do catálogo",
+                    "Sair"));
+            System.out.print(FuncoesFormatacao.solicitarCampo("Escolha uma opção"));
 
             op = sc.nextInt();
             sc.nextLine(); // consumir quebra de linha
@@ -246,36 +271,36 @@ public class Menu {
 
                         // Chama o gerenciador para adicionar o livro e salvar no arquivo .dat
                         gerenciador.cadastrarLivro(novoLivro);
-                        System.out.println("Livro adicionado ao catálogo com sucesso!");
+                        System.out.print(FuncoesFormatacao.exibirMensagem("Livro adicionado ao catálogo com sucesso!"));
 
                     } catch (LivroJaCadastradoCatalogoException e) {
-                        System.out.println("Erro: Este livro já está cadastrado no catálogo.");
+                        System.out.print(FuncoesFormatacao.exibirErro("Este livro já está cadastrado no catálogo."));
                     } catch (Exception e) {
-                        System.out.println("Erro durante o cadastro: " + e.getMessage());
+                        System.out.print(FuncoesFormatacao.exibirErro("Erro durante o cadastro: " + e.getMessage()));
                     }
                     break;
 
                 case 2:
-                    System.out.print("Inserir ID do livro a ser removido: ");
+                    System.out.print(FuncoesFormatacao.solicitarCampo("ID do livro a remover"));
                     int idRemover = sc.nextInt();
                     sc.nextLine(); // consumir quebra de linha
 
                     try {
                         // Chama o gerenciador para remover o livro da biblioteca e atualizar o arquivo .dat
                         gerenciador.removerLivro(idRemover);
-                        System.out.println("Livro removido do catálogo com sucesso!");
+                        System.out.print(FuncoesFormatacao.exibirMensagem("Livro removido do catálogo com sucesso!"));
 
                     } catch (IdNaoEncontradoException e) {
-                        System.out.println("Erro: Não foi encontrado um livro com este ID no catálogo.");
+                        System.out.print(FuncoesFormatacao.exibirErro("Não foi encontrado um livro com este ID no catálogo."));
                     }
                     break;
 
                 case 3:
-                    System.out.println("Encerrando a sessão do administrador...");
+                    System.out.print(FuncoesFormatacao.exibirMensagem("Encerrando a sessão do administrador..."));
                     break;
 
                 default:
-                    System.out.println("Opção inválida. Tente novamente.");
+                    System.out.print(FuncoesFormatacao.exibirErro("Opção inválida."));
                     break;
             }
         }

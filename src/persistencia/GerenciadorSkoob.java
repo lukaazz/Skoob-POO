@@ -6,6 +6,7 @@ import excecoes.AutenticacaoInvalidaException;
 import excecoes.IdNaoEncontradoException;
 import excecoes.LeitorJaExisteException;
 import excecoes.LivroJaCadastradoCatalogoException;
+import modelo.FuncoesFormatacao;
 import modelo.livro.Biblioteca;
 import modelo.livro.Livro;
 import modelo.usuario.Administrador;
@@ -33,7 +34,7 @@ public class GerenciadorSkoob {
 
     public Usuario autenticar(String email, String senha) throws AutenticacaoInvalidaException {
         Usuario usuario = arquivos.autenticar(email, senha);
-        System.out.println("Logando...");
+        System.out.print(FuncoesFormatacao.exibirMensagem("Logando..."));
         return usuario;
     }
 
